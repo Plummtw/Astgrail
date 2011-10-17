@@ -1,0 +1,337 @@
+DROP TABLE IF EXISTS `astgrail_dev`.`action`;
+CREATE TABLE  `astgrail_dev`.`action` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `roomround_id` bigint(20) unsigned DEFAULT NULL,
+  `actioner_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee_id` bigint(20) unsigned DEFAULT NULL,
+  `content` varchar(20) DEFAULT NULL,
+  `mtype` varchar(4) DEFAULT NULL,
+  `action_card` bigint(20) unsigned DEFAULT NULL,
+  `action_card2` bigint(20) unsigned DEFAULT NULL,
+  `action_cards` varchar(200) DEFAULT NULL,
+  `action_flags` varchar(200) DEFAULT NULL,
+  `action_flags2` varchar(200) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `action_roomround_id` (`roomround_id`),
+  KEY `action_actioner_id` (`actioner_id`),
+  KEY `action_actionee_id` (`actionee_id`),
+  KEY `action_action_card` (`action_card`),
+  KEY `action_action_card2` (`action_card2`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`adminmanage`;
+CREATE TABLE  `astgrail_dev`.`adminmanage` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `param_name` varchar(256) DEFAULT NULL,
+  `param_value` varchar(256) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`article`;
+CREATE TABLE  `astgrail_dev`.`article` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `thread_id` bigint(20) unsigned DEFAULT NULL,
+  `uname` varchar(20) DEFAULT NULL,
+  `handle_name` varchar(20) DEFAULT NULL,
+  `trip` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `content` varchar(3000) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  `edited_times` int(11) DEFAULT NULL,
+  `ip_address` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `article_thread_id` (`thread_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`articlethread`;
+CREATE TABLE  `astgrail_dev`.`articlethread` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `handle_name` varchar(20) DEFAULT NULL,
+  `trip` varchar(20) DEFAULT NULL,
+  `title` varchar(80) DEFAULT NULL,
+  `articles` int(11) DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`cardpool`;
+CREATE TABLE  `astgrail_dev`.`cardpool` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `card_no` int(11) DEFAULT NULL,
+  `card` varchar(4) DEFAULT NULL,
+  `owner_id` bigint(20) unsigned DEFAULT NULL,
+  `target_id` bigint(20) unsigned DEFAULT NULL,
+  `position` varchar(2) DEFAULT NULL,
+  `flags` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  `room_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `cardpool_owner_id` (`owner_id`),
+  KEY `cardpool_target_id` (`target_id`),
+  KEY `cardpool_room_id` (`room_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`room`;
+CREATE TABLE  `astgrail_dev`.`room` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room_name` varchar(20) DEFAULT NULL,
+  `room_comment` varchar(60) DEFAULT NULL,
+  `max_user` int(11) DEFAULT NULL,
+  `action_time` int(11) DEFAULT NULL,
+  `reaction_time` int(11) DEFAULT NULL,
+  `room_flags` varchar(500) DEFAULT NULL,
+  `card_index` int(11) DEFAULT NULL,
+  `stack_index` int(11) DEFAULT NULL,
+  `processing` tinyint(1) DEFAULT NULL,
+  `status` varchar(1) DEFAULT NULL,
+  `victory` varchar(1) DEFAULT NULL,
+  `victory_all` varchar(20) DEFAULT NULL,
+  `ip_address` varchar(20) DEFAULT NULL,
+  `talk_time` datetime DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  `max_stars` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`roomphase`;
+CREATE TABLE  `astgrail_dev`.`roomphase` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `roomround_id` bigint(20) unsigned DEFAULT NULL,
+  `phase_no` int(11) DEFAULT NULL,
+  `phase_type` varchar(5) DEFAULT NULL,
+  `phase_subtype` varchar(5) DEFAULT NULL,
+  `actioner_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee2_id` bigint(20) unsigned DEFAULT NULL,
+  `card_enum` varchar(2) DEFAULT NULL,
+  `action_card` bigint(20) unsigned DEFAULT NULL,
+  `action_cards` varchar(200) DEFAULT NULL,
+  `action_flags` varchar(200) DEFAULT NULL,
+  `action_flags2` varchar(200) DEFAULT NULL,
+  `stack` tinyint(1) DEFAULT NULL,
+  `stage` int(11) DEFAULT NULL,
+  `power` int(11) DEFAULT NULL,
+  `deadline` datetime DEFAULT NULL,
+  `last_phase_type` varchar(5) DEFAULT NULL,
+  `last_phase_subtype` varchar(5) DEFAULT NULL,
+  `phase_flags` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `roomphase_roomround_id` (`roomround_id`),
+  KEY `roomphase_actioner_id` (`actioner_id`),
+  KEY `roomphase_actionee_id` (`actionee_id`),
+  KEY `roomphase_actionee2_id` (`actionee2_id`),
+  KEY `roomphase_action_card` (`action_card`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`roomphaselog`;
+CREATE TABLE  `astgrail_dev`.`roomphaselog` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `roomround_id` bigint(20) unsigned DEFAULT NULL,
+  `phase_no` int(11) DEFAULT NULL,
+  `phase_type` varchar(5) DEFAULT NULL,
+  `phase_subtype` varchar(5) DEFAULT NULL,
+  `actioner_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee2_id` bigint(20) unsigned DEFAULT NULL,
+  `card_enum` varchar(2) DEFAULT NULL,
+  `action_card` bigint(20) unsigned DEFAULT NULL,
+  `action_cards` varchar(200) DEFAULT NULL,
+  `action_flags` varchar(200) DEFAULT NULL,
+  `action_flags2` varchar(200) DEFAULT NULL,
+  `stack` tinyint(1) DEFAULT NULL,
+  `stage` int(11) DEFAULT NULL,
+  `power` int(11) DEFAULT NULL,
+  `deadline` datetime DEFAULT NULL,
+  `last_phase_type` varchar(5) DEFAULT NULL,
+  `last_phase_subtype` varchar(5) DEFAULT NULL,
+  `phase_flags` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `roomphaselog_roomround_id` (`roomround_id`),
+  KEY `roomphaselog_actioner_id` (`actioner_id`),
+  KEY `roomphaselog_actionee_id` (`actionee_id`),
+  KEY `roomphaselog_actionee2_id` (`actionee2_id`),
+  KEY `roomphaselog_action_card` (`action_card`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`roomround`;
+CREATE TABLE  `astgrail_dev`.`roomround` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) unsigned DEFAULT NULL,
+  `last_round` bigint(20) unsigned DEFAULT NULL,
+  `round_no` int(11) DEFAULT NULL,
+  `actioner_id` bigint(20) unsigned DEFAULT NULL,
+  `additional` int(11) DEFAULT NULL,
+  `additional_flag` varchar(1) DEFAULT NULL,
+  `turn_no` int(11) DEFAULT NULL,
+  `round_flags` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  `phaselog_no` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `roomround_room_id` (`room_id`),
+  KEY `roomround_last_round` (`last_round`),
+  KEY `roomround_actioner_id` (`actioner_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`talk`;
+CREATE TABLE  `astgrail_dev`.`talk` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `roomround_id` bigint(20) unsigned DEFAULT NULL,
+  `actioner_id` bigint(20) unsigned DEFAULT NULL,
+  `actionee_id` bigint(20) unsigned DEFAULT NULL,
+  `cssclass` varchar(20) DEFAULT NULL,
+  `message` varchar(600) DEFAULT NULL,
+  `mtype` varchar(4) DEFAULT NULL,
+  `message_flags` varchar(200) DEFAULT NULL,
+  `message_flags2` varchar(200) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `talk_roomround_id` (`roomround_id`),
+  KEY `talk_actioner_id` (`actioner_id`),
+  KEY `talk_actionee_id` (`actionee_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`user_t`;
+CREATE TABLE  `astgrail_dev`.`user_t` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uname` varchar(20) DEFAULT NULL,
+  `handle_name` varchar(20) DEFAULT NULL,
+  `trip` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `sex` varchar(1) DEFAULT NULL,
+  `email` varchar(80) DEFAULT NULL,
+  `msn` varchar(80) DEFAULT NULL,
+  `zodiac` varchar(3) DEFAULT NULL,
+  `user_icon_id` bigint(20) unsigned DEFAULT NULL,
+  `user_score` int(11) DEFAULT NULL,
+  `user_flags` bigint(20) DEFAULT NULL,
+  `created_ip` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  `user_memo` varchar(3000) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `user_t_user_icon_id` (`user_icon_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`userentry`;
+CREATE TABLE  `astgrail_dev`.`userentry` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) unsigned DEFAULT NULL,
+  `team_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `user_icon_id` bigint(20) unsigned DEFAULT NULL,
+  `user_no` int(11) DEFAULT NULL,
+  `uname` varchar(20) DEFAULT NULL,
+  `handle_name` varchar(20) DEFAULT NULL,
+  `trip` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `sex` varchar(1) DEFAULT NULL,
+  `role_c` varchar(2) DEFAULT NULL,
+  `tapped` tinyint(1) DEFAULT NULL,
+  `yellow_index` int(11) DEFAULT NULL,
+  `blue_index` int(11) DEFAULT NULL,
+  `hand_max` int(11) DEFAULT NULL,
+  `fixed_hand_max` int(11) DEFAULT NULL,
+  `heals` int(11) DEFAULT NULL,
+  `gems` int(11) DEFAULT NULL,
+  `crystals` int(11) DEFAULT NULL,
+  `last_words` varchar(600) DEFAULT NULL,
+  `revoked` tinyint(1) DEFAULT NULL,
+  `ip_address0` varchar(20) DEFAULT NULL,
+  `ip_address` varchar(20) DEFAULT NULL,
+  `ip_address_md5` varchar(34) DEFAULT NULL,
+  `reaction` tinyint(1) DEFAULT NULL,
+  `last_talk` varchar(600) DEFAULT NULL,
+  `target_user` bigint(20) unsigned DEFAULT NULL,
+  `room_flags` varchar(20) DEFAULT NULL,
+  `role_flags` varchar(20) DEFAULT NULL,
+  `user_flags` varchar(80) DEFAULT NULL,
+  `card_flags` varchar(80) DEFAULT NULL,
+  `option1` varchar(50) DEFAULT NULL,
+  `option2` varchar(50) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `userentry_room_id` (`room_id`),
+  KEY `userentry_team_id` (`team_id`),
+  KEY `userentry_user_id` (`user_id`),
+  KEY `userentry_user_icon_id` (`user_icon_id`),
+  KEY `userentry_target_user` (`target_user`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`userentryteam`;
+CREATE TABLE  `astgrail_dev`.`userentryteam` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) unsigned DEFAULT NULL,
+  `team_type` varchar(1) DEFAULT NULL,
+  `moral` int(11) DEFAULT NULL,
+  `grails` int(11) DEFAULT NULL,
+  `gems` int(11) DEFAULT NULL,
+  `crystals` int(11) DEFAULT NULL,
+  `team_flags` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `userentryteam_room_id` (`room_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`usericon`;
+CREATE TABLE  `astgrail_dev`.`usericon` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `icon_group` int(11) DEFAULT NULL,
+  `icon_gname` varchar(20) DEFAULT NULL,
+  `icon_name` varchar(20) DEFAULT NULL,
+  `icon_filename` varchar(80) DEFAULT NULL,
+  `icon_width` int(11) DEFAULT NULL,
+  `icon_height` int(11) DEFAULT NULL,
+  `color` varchar(7) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `usericon_user_id` (`user_id`)
+) DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `astgrail_dev`.`userlogin`;
+CREATE TABLE  `astgrail_dev`.`userlogin` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `uname` varchar(20) DEFAULT NULL,
+  `login_type` bigint(20) DEFAULT NULL,
+  `created_ip` varchar(20) DEFAULT NULL,
+  `updatedat` datetime DEFAULT NULL,
+  `createdat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `userlogin_user_id` (`user_id`)
+) DEFAULT CHARSET=utf8;

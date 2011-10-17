@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <body class="lift:content_id=main">
+  <div id="main" class="lift:surround?with=astgrail_sub;at=content">
+  <head>
+    <link rel="stylesheet" href="css/game_view.css"></link>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('#abandon').click(function() { 
+        return confirm('確定要廢村？');
+      });
+    })
+    </script>
+  </head>
+  <h3>管理頁面</h3>
+  
+  <div class="lift:AdminSnippet.admin?form=POST">
+  <table>
+    <tr>
+      <td>建村開始時間</td>
+      <td><input id="room_start"/></td>
+    </tr>
+    <tr>
+      <td>建村結束時間</td>
+      <td><input id="room_end"/></td>
+    </tr>
+    <tr>
+      <td>最大村數</td>
+      <td><input id="room_count"/></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input id="submit"/></td>
+    </tr>
+  </table>
+  </div>
+  
+  <br/><br/>
+  
+  <div class="lift:AdminSnippet.room_admin?form=POST">
+  <div id="user_table"></div>
+  <table>
+    <tr>
+      <td>村莊號碼</td>
+      <td><span id="room_no"/></td>
+      <td><input id="view"/></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input id="message" /></td>
+      <td><input id="send_message" /></td>
+      <td><input id="font_type" /></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><input id="send_private_message" /></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><br/><br/><br/></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><input id="abandon"/></td>
+    </tr>
+  </table>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+@import url(core.css);
+
+a{text-decoration: none;}
+a:link{   color: #0000FF;}
+a:hover{  color: #999999; text-decoration: underline;}
+a:visited{color: #0000FF;}
+body{
+  background-color: #FFF5EE;
+  /* background-image: url("../img/top_bg.jpg"); 
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-attachment: fixed; */
+}
+img{border: 0;}
+.comment{ /* 伺服器名 */
+  text-align: right;
+  font-weight: bold;
+}
+noscript{ /* JavaScript 無効時的訊息 */
+  color: #FF0000;
+  font-size: 15pt;
+  font-weight: bold;
+}
+table.main{ /* main 的 table */
+  border: 0;
+  width: 100%;
+  padding: 5px;
+}
+table.main td{vertical-align: top;}
+.menu{ /* 選單 */
+  border: 1px solid #CC3300;
+  width: 140px;
+  padding: 5px 1px;
+  background-color: #CCFFCC;
+  text-align: center;
+  vertical-align: top;
+  font-weight: bold;
+}
+ul{ /* 選單連結 */
+  list-style-type: none;
+  margin-left: -32px;
+  *margin-left: 8px; /* IE6 對應 */
+  line-height: 150%;
+  font-size: 95%;
+}
+fieldset{margin-bottom: 10px;} /* 右側 */
+legend{font-weight: bold;} /* fieldset(右側) 抬頭 */
+.information{margin: 10px 10px;} /* Information (中身為 info) */
+.information h1 h2 h3 h4{
+  margin: 0px;
+  padding: 5px 0px;
+}
+.information h1{
+  background-color: #CCFFCC;
+  font-size: 120%;
+}
+.information h2{
+  background-color: #CCFFFF;
+  font-size: 100%;
+}
+.information h3{
+  background-color: #FFDDDD;
+  font-size: 100%;
+}
+.information h4{
+  background-color: #DDDDDD;
+  font-size: 100%;
+}
+.game-list{ /* 遊戲一覽 (中身為 room_manager) */
+  margin: 20px 20px 30px;
+  line-height: 135%;
+  font-weight: bold;
+}
+.game-list div{text-align: right;}
+.room_comment {text-align: right;}
+.room_option {font-size: 80%;}
+form{margin-top: 10px;} /* 村莊作成Form */
+label{ /* 村莊作成選項名 */
+  margin-left: 1em;
+  font-weight: bold;
+}
+input, select{ /* 設定項目 */
+  background-color: #F0F8FF;
+  border: 1px solid #C0C0C0;
+}
+.text{border: 1px solid #C0C0C0;} /* 村莊名前, 説明等 */
+.explain{font-size: 80%;} /* 選項説明 */
+.explain input{border: 0px solid #000000;} /* 日夜時間 */
+.make{text-align: right;} /* 作成按鈕 */
+.make input{border: 1px solid #000000;}
+.footer{ /* 註腳 (版本情報等) */
+  margin-bottom: 5px;
+  text-align:right;
+  font-size: 80%;
+}

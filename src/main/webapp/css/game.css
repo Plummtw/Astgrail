@@ -1,0 +1,352 @@
+@import url(core.css);
+
+.userentry_table {
+  font-size:10pt;
+  border-width:1px;
+  border-color:black;
+  border-style:dotted;
+}
+
+.voted {background-color: #FF50FF}
+.dead {background-color: #992222}
+
+.decor_none {text-decoration: none;}
+
+/* game_beforegame */
+body{
+  background-color: #FFF5EE; /* 背景色 */
+  color: #000000; /* 文字色 */
+}
+a:link{   color: #0000FF;}
+a:visited{color: #0000FF;}
+a:active{ color: #FF0000;}
+a:hover{  color: #FF0000;}
+.real-time input{
+  background-color: #FFF5EE;
+  color: #000000;
+}
+
+.login{ 
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+.login-link{text-align: right;} /* 更新 & 返回  */
+.login-link span{font-weight: bold;} /* 住民登錄 */
+.login label{ /* 玩家名 & 密碼 */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.login-password{ime-mode: disabled;} /* 密碼 */
+
+.room{text-decoration:underline;} /* 村子標題 */
+.room span{
+  font-size: 15pt;
+  font-weight: bold;
+}
+.game-option{ /* 選項 */
+  padding: 3px;
+  vertical-align: top;
+}
+.game-option img{vertical-align: top;}
+.time-table{
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  vertical-align: top;
+}
+.time-table td{
+  padding-left: 5px;
+  border: 1px dotted #CCCCCC;
+  vertical-align: middle;
+  text-align: left;
+}
+.time-table span{
+  margin-left: 1em;
+  font-size: 80%;
+}
+.real-time{ /* 時間表示 */
+  padding-top: 5px;
+  vertical-align: middle;
+}
+.real-time span{font-weight: bold;}
+.real-time input{ /* JavaScript */
+  border: 0px solid;
+  vertical-align: middle;
+  font-size:11pt;
+}
+.system-vote{ /* 投票催促 */
+  padding: 7px;
+  background-color: #CC3300;
+  color: #FFFAFA;
+  font-weight: bold;
+}
+/* OutputPlayerList() */
+.user-table{ /* 玩家列表 */
+  width: 750px;
+  font-size: 10pt;
+}
+.user-table table{
+  border: 1px dotted #000000;
+  border-spacing: 5px;
+}
+.user-table table td{
+  vertical-align: top;
+  font-size: 10pt;
+}
+.user-table table img{border: 2px solid;} /* Icon  */
+.user-table table td span{font-weight: bold;} /* 役職名 */
+
+/* OutputRevoteList() */
+.revote{ /* 再投票 */
+  padding: 0px 3em;
+  background-color: #FF0000;
+  color: #FFFAFA; /* snow */
+  font-size: 14pt;
+  font-weight: bold;
+}
+/* OutoutTalkLog() & OutputHeavenTalkLog() */
+.talk{ /* 發言 Table */
+  border: 0;
+  border-collapse: collapse;
+  width: 100%
+}
+.normal{  /* 通常發言 */
+  font-size:12pt;
+}
+.red {  /* 紅色発言 */
+  color: #CC0000;
+}
+.blue {  /* 藍色發言 */
+  color: #1E90FF;
+}
+.purple_normal{  /* 紫色發言 */
+  color: #CC66CC;
+}
+.tangerine_normal{  /* 橘色發言 */
+  color: #FF9966;
+}
+.green_normal{  /* 綠色發言 */
+  color: #33CC99;
+}
+
+.large {  /* 大聲 */
+  font-size: 20pt;
+}
+
+.slightlarge{  /* 稍大聲 */
+  font-size: 16pt;
+}
+
+.normal{ /* 一般 */
+  font-size: 12pt;
+}
+
+.small{ /* 小聲 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+
+.add-role{font-size: 8pt;} /* 角色表示選項用 */
+
+.user-talk{ /* 玩家發言 */
+  text-align: left;
+  vertical-align: middle;
+}
+.user-talk td{border-bottom: 1px dashed #C0C0C0;}
+.user-name{width: 200px;} /* 玩家名名 */
+.user-name span{font-size: 8pt;} /* 獨自發言 */
+.say{ /* 發言內容 */
+  margin-left: 1px;
+  width: 1000px;
+  /* 草対策：ブラウザ依存があるのでひとまず不使用
+  word-wrap: break-word;
+  word-break:break-all;
+  */
+}
+/* OutputTalkLog() */
+.system-message{text-align: left;} /* 系統訊息 */
+.system-message td{
+  border-top: 1px dashed #C0C0C0;
+  width: 1000px;
+  padding-left: 6em;
+  color: #FFFAFA;
+  font-weight: bold;
+}
+.objection-male{  background-color: #336699;} /* 異議あり(男) */
+.objection-female{background-color: #FF0099;} /* 異議あり(女) */
+.game-start{      background-color: #999900;} /* ゲーム開始投票 (現在は不使用) */
+.kick-do{          background-color: #AAAA33;} 
+.flip-do{         background-color: #FFCC99;} 
+.move-do{         background-color: #FFFFCC;} 
+.attack-do{        background-color: #FFCCCC;} 
+.shadow-do{        background-color: #CC3300;} 
+.hunter-do{        background-color: #3399FF;} 
+.neutral-do{       background-color: #9933FF;} 
+
+.vote-do{         background-color: #999900;} /* 処刑投票 */
+.mage-do{         background-color: #9933FF;} /* 占い師 */
+.guard-do{        background-color: #3399FF;} /* 狩人 */
+.revive-do{       background-color: #009966;} /* 猫又 */
+.assassin-do{     background-color: #904040;} /* 暗殺者 */
+.mind-scanner-do{ background-color: #A0A000;} /* さとり */
+.wizard-do{       background-color: #BB88CC;} /* 魔法使い */
+.escape-do{       background-color: #606090;} /* 逃亡者 */
+.wolf-eat{        background-color: #CC3300;} /* 人狼 */
+.cupid-do{        background-color: #FF88DD;} /* キューピッド */
+.vampire-do{      background-color: #A000A0;} /* 吸血鬼 */
+.fairy-do{        background-color: #666666;} /* 妖精 */
+.ogre-do{         background-color: #C07000;} /* 鬼 */
+.duelist-do{      background-color: #D04060;} /* 決闘者 */
+.mania-do{        background-color: #C0A060;} /* 神話マニア */
+.system-user{ /* 系統玩家 */
+  width: 1000px;
+  padding-left: 6em;
+  background-color: #EFEFEF;
+  color: #000000;
+  font-weight: bold;
+}
+.dummy-boy{ /* 替身君發言 */
+  width: 1000px;
+  /* padding-left: 6em; */
+  background-color: #F0F8FF;
+  color: #000000;
+  font-weight: bold;
+}
+.talk-common{font-size: 8pt;} /* 共有者名字 */
+.say-common{ font-size: 6pt;} /* 共有者發言 */
+.night-self-talk{color: #FFFAFA;} /* 單獨發言 */
+.night-wolf{     color: #FFCCFF;} /* 狼叫 */
+.night-common{   color: #CCFFCC;} /* 共有者對話 */
+.night-fox{      color: #FAFA66;} /* 狐的對話 */
+/* OutputLastWords() & OutputSelfLastWords() */
+.lastwords{ /* 遺言 */
+  border: 0;
+  border-spacing: 5px;
+  width: 100%;
+  background-color: #DDEEFF;
+}
+.lastwords td{
+  border-top: 1px dashed #C0C0C0;
+  color: #000000;
+}
+.lastwords-title{ /* 名前 */
+  width: 140px;
+  vertical-align: middle;
+  text-align: left;
+}
+.lastwords-title span{ /*～「的遺言」*/
+  margin-right: 1px;
+  font-size: 80%;
+}
+.lastwords-body{ /* 本文 */
+  width: 1000px;
+  vertical-align: top;
+}
+/* OutputLastWords() */
+.system-lastwords{ /* 遺言系統 table */
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #CCDDFF;
+  color: #000000;
+}
+.system-lastwords td{ /* 遺言配合和其他系統訊息調整 */
+  padding-left: 6em;
+  text-align: left;
+  font-weight: bold;
+}
+/* OutputDeadManType() */
+.dead-type{
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #FFFAFA;
+  color: #990000;
+  font-weight:bold;
+}
+.dead-type td{
+  padding-left: 6em;
+  width: 100%;
+  height: 35px;
+  text-align: left;
+  vertical-align: middle;
+}
+.dead-type-vote{        color: #666600;}
+.dead-type-revive{      color: #009966;}
+.dead-type-lovers{      color: #FF66CC;}
+.dead-type-fairy{       color: #888888;}
+.dead-type-sudden-death{color: #33CCFF;}
+/* GenerateWeatherReport() */
+.weather{
+  padding: 7px 0 7px 6em;
+  background-color: #CCDDFF;
+  color: #000000;
+  font-weight: bold;
+}
+.weather span{color: #990000;}
+/* OutputVoteListDay() */
+.vote-list{ /* 投票結果 */
+  border: 2px solid;
+  border-collapse: collapse;
+  font-size:12pt;
+}
+.vote-list td{
+  border: 1px solid;
+  padding: 5px;
+}
+.vote-times{text-align: center;} /* 投票回数 */
+.vote-name{ /* ユーザ名 */
+  text-align: left;
+  font-weight: bold;
+}
+/* OutputGameHeader() */
+.game-header{
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+.view-option{ /* 選項表示 */
+  border: 0;
+  text-align: right;
+  font-size: 80%;
+}
+.caution{ /* 遊戲開始前之注意 */
+  padding: 7px 0;
+  background-color: #009900;
+  color: #FFFAFA;
+  text-align: center;
+  font-weight: bold;
+}
+.caution span{font-size: 80%;}
+.objection{ /* 「異議」按鈕 */
+  vertical-align: middle;
+  text-align: right;
+}
+/* OutputAbility() */
+.ability{ /* 共通能力 */
+  padding: 0 3em;
+  color: #FFFAFA;
+  font-size: 14pt;
+  font-weight: bold;
+}
+.ability-dead{background-color: #CC0000;} /* 已死亡時 */
+.ability-partner{ /* 同伴表示 */
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.ability-partner td{
+  border: 1px solid;
+  vertical-align: middle;
+}
+.ability-result{ /* 能力の結果表示 */
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
+.ability-result td{
+  border: 0px solid #000000;
+  vertical-align: middle;
+}
+/* CheckSelfVote() */
+.self-vote{margin: 5px 0;}

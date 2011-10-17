@@ -1,0 +1,39 @@
+@import url(core.css);
+
+a {text-decoration:none;}
+a:hover {color:#999999;text-decoration:underline;}
+a:visited {color : blue;}
+a:link {color : blue;}
+body {
+  /* background-image: url("img/top_bg.jpg"); */
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-attachment: fixed }
+.table1 {
+  border-collapse: collapse;
+  border: 1px solid #CCCCCC;
+  line-height: 135%; 
+  margin: 20px 20px 30px;
+  width: 650px;
+}
+.table2 {
+  text-align: right;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+  background-color: #ffffff;
+  font-size : 12px;
+}
+.table3 {
+  border-top: 1px solid #CCCCCC;
+  background-color: #CCCCCC;
+}
+.table4 {
+  background-color: #ffffff;
+  font-size : 13px;
+}
+.table5 {
+	width: 650px;
+}
+
+

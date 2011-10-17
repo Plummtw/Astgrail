@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <body class="lift:content_id=main">
+  <div id="main" class="lift:surround?with=astgrail;at=content">    
+  <head>
+    <link rel="stylesheet" href="css/game_view.css"></link>
+    <link rel="stylesheet" href="css/game_up.css"></link>
+    <!-- script id="js-game" src="scripts/game.js" type="text/javascript"></script -->
+  </head>
+  <form class="lift:form.ajax" id="form"> 
+  <div class="lift:GameCheckSnippet?check=game"></div>
+  <div class="lift:Comet?type=GameComet">
+  <a id="game_top"></a>
+  <div class="lift:Msgs?showAll=true"></div>
+  <div class="action">
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><textarea name="say" id="say" rows="3" cols="70" wrap="soft"></textarea></td>
+      <td valign="bottom">
+      <table>
+        <tr>
+          <td>
+            <input type="hidden" id="command" name="command" value="" />
+            <input type="submit" id="submit" value="送出發言" />
+          </td>
+        </tr>
+        <tr>
+         <td>
+          <input id="font_type" name="font_type"/>
+         </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="action-bar" class="action-bar"></div>
+          </td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+   </table>
+  </div>
+  <table class="login">
+    <tr>
+      <td class="room"><span id="room_name"></span> [<span id="room_no"></span>號村]<br/><span id="room_comment"></span></td>
+      <td class="login-link">
+        <a id="logout_link" href="login.html?command=logout">[登出]</a>
+        <a id="logout_link2" href="login.html?command=logout">[登出2]</a>
+        <a id="go_out_link" href="login.html?command=go_out">[自刪]</a>
+        <a href="main.html">[返回]</a></td></tr>
+  </table>
+  <div id="time-table" class="time-table"></div>
+  <div id="user-table" class="user-table"></div>
+  <div id="card-table" class="card-table"></div>  
+  <div id="team-table" class="team-table"></div>
+  <div id="talk-table" class="talk-table"></div>
+  </div>
+  </form>
+  <script type="text/javascript">
+// <![CDATA[    
+  document.getElementById("say").onkeydown = function (moz_ev) {
+    var ev = null;
+    if (window.event){
+      ev = window.event;
+    }
+    else {
+      ev = moz_ev;
+    }
+    if (ev != null && ev.ctrlKey && ev.keyCode == 13) {
+      document.getElementById("submit").click();
+    }
+  }
+// ]]>    
+  </script>
+  </div>
+  </body>
+</html>
+

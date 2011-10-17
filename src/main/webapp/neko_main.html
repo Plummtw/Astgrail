@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>汝等是人是狼？幻想鄉伺服器</title>
+<link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<a href="./"><img src="img/top_title.jpg"></a>
+<div class="comment">幻想鄉伺服器</div>
+<noscript>&lt;&lt; 請安裝JavaScript &gt;&gt;</noscript>
+<table class="main"><tr>
+<td>
+    <div class="menu">選單</div>
+    <ul>
+	  <li><a href="info/script_info.php">伺服器設定</a></li>
+	  <li><a href="info/chaos.php">闇鍋模式</a></li>
+      <li><a href="info/rule.php">遊戲規則</a></li>
+      <li><a href="old_log.php">遊戲紀錄</a></li>
+	  <li><a href="info/new_role/">新職業說明</a></li>
+	  <li><a href="http://nedftp.com/wiki/index.php/%E8%81%B7%E6%A5%AD%E4%BB%8B%E7%B4%B9(%E8%B2%93%E5%8F%88)">職業說明（Wiki）</a></li>
+	  <li><a href="info/">其他情報</a></li>
+	  <li><a href="info/shared_room.php">相關伺服器村情報</a></li>
+	  <li><a href="trip.php">Trip</a></li>
+	  <li><a href="bbs.php">討論區</a></li>
+      <li>頭像<a href="icon_upload.php">上傳</a>、<a href="icon_view.php">一覽</a></li>
+    </ul>
+  <div class="menu">交流連結</div>
+<ul>
+<li><a href="info/comparison.php">東方人物職業對照表</a></li>
+<li><a href="http://nedftp.com/wiki/index.php/">人狼Wiki</a></li>
+</ul>
+<div class="menu">外部連結</div>
+<ul>
+<li>－台灣－</li>
+<li><a href="http://diam.ngct.net/">鑽石伺服器</a></li>
+<li><a href="http://jigokutushin.net/jinro/">地獄通信伺服器</a></li>
+<li><a href="http://higurashi.nctucs.org/">寒蟬伺服器</a></li>
+<li><a href="http://parrot2.jigokutushin.net/">鸚鵡伺服器</a></li>
+<li><a href="http://catjinro.no-ip.org:81/main.html">PRRT鸚鵡實驗站</a></li>
+<li>－日本－</li>
+<li><a href="http://www12.atpages.jp/cirno/">チルノ鯖</a></li>
+<li><a href="http://www23.atpages.jp/youmu/">幻夢鯖</a></li>
+<li><a href="http://alicegame.dip.jp/sanae/">早苗鯖</a></li>
+<li><a href="http://alicegame.dip.jp/suisei/">翠星石鯖</a></li>
+<li><a href="http://www7.atpages.jp/izayoi398/">咲夜鯖</a></li>
+<li><a href="http://www16.atpages.jp/sasugabros/">流石弟者鯖</a></li>
+<li><a href="http://www12.atpages.jp/yaruo/jinro/">流石兄弟鯖</a></li>
+<li><a href="http://alicegame.dip.jp/sousei/">蒼星石テスト鯖</a></li>
+<li><a href="http://www13.atpages.jp/yaranai/">薔薇姉妹鯖</a></li>
+<li><a href="http://www13.atpages.jp/suigintou/">水銀鯖</a></li>
+<li><a href="http://www14.atpages.jp/mmr1/">世紀末鯖</a></li>
+<li><a href="http://bourbonhouse.xsrv.jp/jinro/">バーボンハウス鯖</a></li>
+<li><a href="http://dynamis.xsrv.jp/jinro/">裏世界鯖</a></li>
+<li><a href="http://kiterew.tv/jinro/">小鳥鯖</a></li>
+<li><a href="http://www.freedom.xii.jp/jinro/">バーボン鯖</a></li>
+<li><a href="http://jinro.blue-sky-server.com/">猫又鯖</a></li>
+<li><a href="http://acjinrou.blue-sky-server.com/">AC 人狼鯖</a></li>
+<li><a href="http://jinrou.dip.jp/~jinrou/">ココア氏鯖</a></li>
+<li><a href="http://www7a.biglobe.ne.jp/~kuri/">桃栗三年鯖</a></li>
+</ul>
+<!-- start twitterwind code -->
+<script type="text/javascript"> 
+<!--
+var twitterwind_option     = '{"isOnlyMe":true,"twitterwind_logo":"","twitterwind_logo_bgcolor":"FFFFFF","twitterwind_logo_color":"333303","followers_color":"000000","followers_bgcolor":"FFFFFF","twitterwind_max_length":60,"twitterwind_username":"none","twitterwind_username_color":"333333","twitterwind_username_bgcolor":"FFFFFF","twitterwind_twit":"block","twitterwind_twit_color":"333333","twitterwind_twit_bgcolor":"FFFFFF","twitterwind_twit_link_color":"666666","twitterwind_twit_scroll_color":"777777","twitterwind_twit_scroll_bg_color":"FFFFFF","twitterwind_follower":"none","twitterwind_follower_bgcolor":"000000","twitterwind_frame_width":200,"twitterwind_frame_height":350,"twitterwind_frame_border":false,"twitterwind_frame_border_color":"555555","twitterwind_base_font_size":9,"twitterwind_me_font_size":10,"twitterwind_caption_font_size":12,"twitterwind_scroll_height":326,"eusn":"VZUjttH1VXk="}';
+var twitterwind_url        = 'http://www.tweetswind.com/twitterwind.php';
+//-->
+</script>
+<script type="text/javascript" src="http://www.tweetswind.com/js/twitterwind.js"></script>
+<!--利用規約に従ってページ内に必ずリンクを表示してください-->
+<div style="font-size:12px; text-align:right; width:200px"><a target="_blank" href="http://www.tweetswind.com">Twitter ブログパーツ</a></div>
+<!-- end twitterwind code -->
+<!--da4436684850f8409cbafa3614e826cb-->
+ 
+<div style="width:200px; height:375px;"><iframe src="http://www.plurk.com/getWidget?uid=7854161&amp;h=375&amp;w=200&amp;u_info=2&amp;bg=000000&tl=FFFFFF" width="200" frameborder="0" height="375" scrolling="no"></iframe><div style="float: right; padding: 1px;"> <a href="http://plurk.com/" target="_blank" style="font-size: 10px !important; color: #999 !important; border: none; text-decorate: none;" title="Plurk - A Social Journal for your life">Plurk.com</a></div></div>
+ 
+</td>
+<td>
+<font size="3" color="#FF0000">
+<marquee>
+<a href="bbs.php">討論區</a>開放<a href="bbs.php?view=1&page=1">BUG回報</a>、<a href="bbs.php?view=6&page=1">構想提供</a>，請多加利用。
+</marquee>
+</font>
+  <fieldset>
+    <legend>伺服器公告</legend>
+    <div class="information"><h2>▉版本 1.5.0 α5 / 猫又特有 2.0 Build0312</h2>
+<h1>▉公告</h1>
+<h3>本伺服器M群：group224099@msnzone.cn（審核制）</h3>
+<font size="4" color="#FF0000">
+本版本人狼宗旨為「沒道理」「無法推理」「樂在其中的人就贏了」。<br><br>
+</font>
+<input type="button" onclick="updateElement()" value="更新情報" />
+<input type="button" onclick="bugElement()" value="BUG" />
+<br>
+<script type="text/javascript"> 
+ function updateElement()
+{
+document.getElementById("update").style.display="block";
+document.getElementById("bug").style.display="none";
+}
+ function bugElement()
+{
+document.getElementById("update").style.display="none";
+document.getElementById("bug").style.display="block";
+}
+</script>
+<dir style="display:none" id="update">
+<h2>更新情報：</h2>
+<font size="2">
+天候「波風」「小夜嵐」「流星群」「春時雨」「樹隙光」「疏雨」「川霧」「蒼天」<br>
+「雪」「梅雨」「雹」「半月」「陰天」「彗星」「乾旱」<br>
+職業「比丘尼」「祈禱師」「舟幽靈」「黒衣」「入道」「落釣瓶」「八咫烏」「地縛靈」「催眠師」<br>
+PHP的浮動小數點相關嚴重錯誤N度修正。
+</font>
+</dir>
+ 
+<dir style="display:none" id="bug">
+<h2>BUG：</h2>
+<font size="2">
+-
+<BR>
+</font>
+</dir>
+ 
+<font size="2">
+<h4>▉管理員 柴郡猫☻ThmN2YyM、子狼、克洛洛<br>
+▉協助修改更新 名無☻WI5YTJkM、子狼、夏影、克洛洛、宮永咲、鸚鵡、大樹☻WZiMjMzN</h4>
+</font></div>
+  </fieldset>
+  <fieldset>
+    <legend>村莊一覽</legend>
+    <div class="game-list"><a href="login.php?room_no=1626">
+<img class="option" src="./img/room_option/waiting.gif" alt="等待中" title="等待中"><span>[1626號村]</span>暗鍋村<br>
+<div>〜啦啦啦〜 <img class="option" src="./img/room_option/real_time.gif" alt="實際時間　日： 4 分　夜： 2 分" title="實際時間　日： 4 分　夜： 2 分">[4：2]<img class="option" src="./img/room_option/dummy_boy.gif" alt="初日犧牲者" title="初日犧牲者"><img class="option" src="./img/room_option/gerd.gif" alt="村人犧牲者" title="村人犧牲者"><img class="option" src="./img/room_option/auto_open_cast.gif" alt="靈界資訊自動顯示" title="靈界資訊自動顯示"><img class="option" src="./img/room_option/weather.gif" alt="天候系統" title="天候系統"><img class="option" src="./img/room_option/replace_human.gif" alt="村人置換村" title="村人置換村"><img class="option" src="./img/room_option/chaos_hyper.gif" alt="超・闇鍋模式" title="超・闇鍋模式"><img class="option" src="./img/room_option/topping.gif" alt="固定職業追加模式(TypeE：憑依村)" title="固定職業追加模式(TypeE：憑依村)">[E]<img class="option" src="./img/room_option/chaos_open_cast_role.gif" alt="登場系列通知" title="登場系列通知"><img class="option" src="./img/room_option/no_sub_role.gif" alt="不開啟副職業" title="不開啟副職業">(最大40人)</div>
+</a><br>
+</div>
+  </fieldset>
+  <fieldset>
+    <legend>村莊建立</legend><form method="POST" action="room_manager.php">
+<input type="hidden" name="command" value="CREATE_ROOM">
+<table>
+<tr>
+<td><label>村莊名稱：</label></td>
+<td><input type="text" name="room_name" size="50"> 村</td>
+</tr>
+<tr>
+<td><label>村莊附註：</label></td>
+<td><input type="text" name="room_comment" size="50"></td>
+</tr>
+<tr>
+<td><label>最大人數：</label></td>
+<td>
+<select name="max_user">
+<optgroup label="最大人數">
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+<option value="32">32</option>
+<option value="33">33</option>
+<option value="34">34</option>
+<option value="35">35</option>
+<option value="36">36</option>
+<option value="37">37</option>
+<option value="38">38</option>
+<option value="39">39</option>
+<option value="40" selected>40</option>
+</optgroup>
+</select>
+<span class="explain">(<a href="info/cast.php">職業配置</a>)</span></td>
+</tr>
+<tr><td colspan="2"><hr></td></tr><tr>
+<td><label for="wish_role">希望職業：</label></td>
+<td class="explain">
+<input id="wish_role" type="checkbox" name="wish_role" value="on">
+(可以選擇希望的職業，還需要點運氣)
+</td>
+</tr>
+<tr>
+<td><label for="real_time">實際時間：</label></td>
+<td class="explain">
+<input id="real_time" type="checkbox" name="real_time" value="on" checked>
+(遊戲透過實際時間來進行　日：
+<input type="text" name="real_time_day" value="5" size="2" maxlength="2">分 夜：
+<input type="text" name="real_time_night" value="3" size="2" maxlength="2">分)
+</td>
+</tr>
+<tr>
+<td><label for="wait_morning">凌晨待機制：</label></td>
+<td class="explain">
+<input id="wait_morning" type="checkbox" name="wait_morning" value="on">
+(日出後一定時間內無法發言)
+</td>
+</tr>
+<tr>
+<td><label for="open_vote">給予票數公開：</label></td>
+<td class="explain">
+<input id="open_vote" type="checkbox" name="open_vote" value="on">
+(投票表決時所給予的票數公開（超闇鍋不建議，對非人側不利）)
+</td>
+</tr>
+<tr>
+<td><label for="open_day">事件前日：</label></td>
+<td class="explain">
+<input id="open_day" type="checkbox" name="open_day" value="on">
+(遊戲從１日目的白天開始，初日並不會進行表決處死)
+</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr>
+<td><label>初日犧牲者：</label></td>
+<td class="explain">
+<input type="radio" name="dummy_boy" value="">
+關閉<br>
+<input type="radio" name="dummy_boy" value="on" checked>
+開啟<br>
+<input type="radio" name="dummy_boy" value="gm_login">
+初日犧牲者(GM) (可讓開村者自訂初日犧牲者密碼並登入)
+</td>
+</tr>
+<tr>
+<td><label>GM 登入密碼：</label></td>
+<td><input type="text" name="gm_password" size="20"><span class="explain">初日犧牲者(GM)的帳號為「dummy_boy」，透過您輸入的密碼進行登入</span></td>
+</tr>
+<tr>
+<td><label for="gerd">村人犧牲者：</label></td>
+<td class="explain">
+<input id="gerd" type="checkbox" name="gerd" value="on">
+(除了部分情況，初日犧牲者將強制成為村人)
+</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr>
+<td><label>靈界資訊關閉：</label></td>
+<td class="explain">
+<input type="radio" name="not_open_cast" value="">
+顯示 (復活能力無效、決鬥村配置為：暗殺決鬥)<br>
+ 
+<input type="radio" name="not_open_cast" value="full">
+不顯示 (復活能力有效、決鬥村配置為：毒素決鬥)<br>
+<input type="radio" name="not_open_cast" value="auto" checked>
+自動 (系統自行判定、決鬥村配置為：戀色決鬥)
+</td>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td></td><td>
+↓普通模式專用選項
+</td></tr>
+<tr><td colspan="2"><hr></td></tr><tr>
+<td><label for="role_poison">埋毒者登場 (20人～)：</label></td>
+<td class="explain">
+<input id="role_poison" type="checkbox" name="poison" value="on" checked>
+(被表決處死、被襲擊的場合毒殺村人、人狼[村人2→埋毒1、人狼1])
+</td>
+</tr>
+<tr>
+<td><label for="role_assassin">暗殺者登場 (22人～)：</label></td>
+<td class="explain">
+<input id="role_assassin" type="checkbox" name="assassin" value="on">
+(每天夜晚暗殺一名玩家[村人2→暗殺者1、人狼1])
+</td>
+</tr>
+<tr>
+<td><label for="role_boss_wolf">白狼登場 (18人～)：</label></td>
+<td class="explain">
+<input id="role_boss_wolf" type="checkbox" name="boss_wolf" value="on">
+(占卜結果「村人」、靈能結果「白狼」的人狼[人狼1→白狼1])
+</td>
+</tr>
+<tr>
+<td><label for="role_poison_wolf">毒狼登場 (20人～)：</label></td>
+<td class="explain">
+<input id="role_poison_wolf" type="checkbox" name="poison_wolf" value="on">
+(被表決處死時毒殺村人的人狼<br>　　　[人狼1→毒狼1、村人1→藥師1])
+</td>
+</tr>
+<tr>
+<td><label for="role_possessed_wolf">憑狼登場 (17人～)：</label></td>
+<td class="explain">
+<input id="role_possessed_wolf" type="checkbox" name="possessed_wolf" value="on">
+(襲擊時憑依對方的人狼[人狼1→憑狼1])
+</td>
+</tr>
+<tr>
+<td><label for="role_sirius_wolf">天狼登場 (17人～)：</label></td>
+<td class="explain">
+<input id="role_sirius_wolf" type="checkbox" name="sirius_wolf" value="on">
+(同伴不斷減少時而擁有特殊能力的人最終兵器狼。[人狼1→天狼1])
+</td>
+</tr>
+<tr>
+<td><label for="role_cupid">邱比特登場 (16人～)：</label></td>
+<td class="explain">
+<input id="role_cupid" type="checkbox" name="cupid" value="on">
+(初日夜間選擇兩人成為戀人，戀人勝利成為他們的勝利條件<br>　　　[村人1→邱比特1])
+</td>
+</tr>
+<tr>
+<td><label for="role_medium">巫女登場 (20人～)：</label></td>
+<td class="explain">
+<input id="role_medium" type="checkbox" name="medium" value="on">
+(分析暴斃者所屬陣營的靈能者[村人2→巫女1、女神1])
+</td>
+</tr>
+<tr>
+<td><label for="role_mania">模仿師登場 (16人～)：</label></td>
+<td class="explain">
+<input id="role_mania" type="checkbox" name="mania" value="on">
+(初日夜間模仿別人的職業[村人1→模仿師1])
+</td>
+</tr>
+<tr>
+<td><label for="role_decide">決定者登場 (11人～)：</label></td>
+<td class="explain">
+<input id="role_decide" type="checkbox" name="decide" value="on" checked>
+(投票的票數為1.5票[兼任])
+</td>
+</tr>
+<tr>
+<td><label for="role_authority">權力者登場 (11人～)：</label></td>
+<td class="explain">
+<input id="role_authority" type="checkbox" name="authority" value="on" checked>
+(投票的票數為2票[兼任])
+</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td></td><td>
+↓通用選項
+</td></tr>
+<tr><td colspan="2"><hr></td></tr><tr>
+<td><label for="role_survival">世界末日村：</label></td>
+<td class="explain">
+<input id="role_survival" type="checkbox" name="survival" value="on">
+(全體玩家附加「求生者」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_random">人品村：</label></td>
+<td class="explain">
+<input id="role_random" type="checkbox" name="random" value="on">
+(全體玩家附加「波瀾萬丈」「氣分屋」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_liar">狼少年村：</label></td>
+<td class="explain">
+<input id="role_liar" type="checkbox" name="liar" value="on">
+(全體玩家一定機率附加「狼少年」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_gentleman">紳士・淑女村：</label></td>
+<td class="explain">
+<input id="role_gentleman" type="checkbox" name="gentleman" value="on">
+(全體玩家附加「紳士」「淑女」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_sudden_death">虛弱體質村：</label></td>
+<td class="explain">
+<input id="role_sudden_death" type="checkbox" name="sudden_death" value="on">
+(全體玩家附加投票相關暴斃死副職業，無法搭配天邪鬼村)
+</td>
+</tr>
+<tr>
+<td><label for="role_perverseness">天邪鬼村：</label></td>
+<td class="explain">
+<input id="role_perverseness" type="checkbox" name="perverseness" value="on">
+(全體玩家附加「天邪鬼」副職業，無法搭配虛弱體質村)
+</td>
+</tr>
+<tr>
+<td><label for="role_deep_sleep">静寂村：</label></td>
+<td class="explain">
+<input id="role_deep_sleep" type="checkbox" name="deep_sleep" value="on">
+(全體玩家附加「爆睡者」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_mind_open">白夜村：</label></td>
+<td class="explain">
+<input id="role_mind_open" type="checkbox" name="mind_open" value="on">
+(全體玩家附加「公開者」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_blinder">宵闇村：</label></td>
+<td class="explain">
+<input id="role_blinder" type="checkbox" name="blinder" value="on">
+(全體玩家附加「盲人」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_critical">急所村：</label></td>
+<td class="explain">
+<input id="role_critical" type="checkbox" name="critical" value="on">
+(全體玩家附加「會心」「痛恨」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_joker">鬼牌村：</label></td>
+<td class="explain">
+<input id="role_joker" type="checkbox" name="joker" value="on">
+(其中一人附加「鬼牌」副職業)
+</td>
+</tr>
+<tr>
+<td><label for="role_detective">偵探村：</label></td>
+<td class="explain">
+<input id="role_detective" type="checkbox" name="detective" value="on">
+(【<a href="info/detective.php">偵探村規則</a>】「偵探」將會登場，並且在初日公開)
+</td>
+</tr>
+<tr>
+<td><label for="role_weather">天候系統：</label></td>
+<td class="explain">
+<input id="role_weather" type="checkbox" name="weather" value="on">
+(「天候」可以帶來特殊的事件)
+</td>
+</tr>
+<tr>
+<td><label for="role_festival">祭祀村：</label></td>
+<td class="explain">
+<input id="role_festival" type="checkbox" name="festival" value="on">
+(管理員可設定的特殊村（可開啟部分特殊配置村，詳閱<a href="info/rule.php">遊戲規則</a>）)
+</td>
+</tr>
+<tr>
+<td><label>村人置換村：</label></td>
+<td>
+<select name="replace_human">
+<optgroup label="模式">
+<option value="" selected>普通模式</option><option value="full_mania">模仿師村</option>
+<option value="full_chiroptera">蝙蝠村</option>
+<option value="full_cupid">邱比特村</option>
+<option value="replace_human">村人置換村</option>
+</optgroup>
+</select>
+<span class="explain">(【村人置換村：逃亡者】全體「村人」替換成特定職業)</span></td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td></td><td>
+↓欲遊玩特殊模式請務必選擇，例如闇鍋模式
+</td></tr>
+<tr><td colspan="2"><hr></td></tr><tr>
+<td><label>特殊配置模式：</label></td>
+<td>
+<select name="special_role">
+<optgroup label="模式">
+<option value="" selected>普通模式</option><option value="chaos">闇鍋模式</option>
+<option value="chaosfull">真・闇鍋模式</option>
+<option value="chaos_hyper">超・闇鍋模式</option>
+<option value="duel">決鬥村</option>
+<option value="gray_random">灰單村</option>
+<option value="quiz">問答村</option>
+</optgroup>
+</select>
+<span class="explain">(<a href="info/game_option.php">遊戲選項</a>)</span></td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td></td><td>
+↓闇鍋模式專用選項
+</td></tr>
+<tr><td colspan="2"><hr></td></tr><tr>
+<td><label>固定職業追加模式：</label></td>
+<td>
+<select name="topping">
+<optgroup label="組合">
+<option value="" selected>關閉</option><option value="a">A：人形村</option>
+<option value="b">B：出題村</option>
+<option value="c">C：吸血村</option>
+<option value="d">D：復活村</option>
+<option value="e">E：憑依村</option>
+<option value="f">F：鬼村</option>
+</optgroup>
+</select>
+<span class="explain">(額外追加固定的職業)</span></td>
+</tr>
+<tr>
+<td><label>登場職業通知：</label></td>
+<td class="explain">
+<input type="radio" name="chaos_open_cast" value="">
+關閉<br>
+ 
+<input type="radio" name="chaos_open_cast" value="camp">
+陣營通知 (登場陣營的人數通知)<br>
+ 
+<input type="radio" name="chaos_open_cast" value="role" checked>
+系列通知 (登場系列的人數通知)<br>
+ 
+<input type="radio" name="chaos_open_cast" value="full">
+完全通知 (登場職業的人數通知)
+</td>
+</tr>
+<tr>
+<td><label>副職業：</label></td>
+<td class="explain">
+<input type="radio" name="sub_role_limit" value="no_sub_role" checked>
+不開啟副職業<br>
+ 
+<input type="radio" name="sub_role_limit" value="sub_role_limit_easy">
+部分副職業－簡單：權力者系、雜草魂系<br>
+ 
+<input type="radio" name="sub_role_limit" value="sub_role_limit_normal">
+部分副職業－普通：權力者系、雜草魂系、決定者系<br>
+ 
+<input type="radio" name="sub_role_limit" value="">
+副職業全開<br>
+</td>
+</tr>
+<tr>
+<td><label for="secret_sub_role">不顯示副職業：</label></td>
+<td class="explain">
+<input id="secret_sub_role" type="checkbox" name="secret_sub_role" value="on">
+(不顯示自己的副職業：闇鍋模式專用選項)
+</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td class="make" colspan="2"><input type="submit" value=" 建立 "></td></tr>
+</table>
+</form>
+  </fieldset>
+</td>
+</tr></table>
+ 
+<div class="footer">Powered by <a href="http://sourceforge.jp/projects/jinrousiki/">人狼式</a> Ver. 1.5.0 alpha5 from <a href="http://sourceforge.jp/projects/jinrousiki/">式神研究同好会</a><br>Founded by: 柴郡猫</div>
+</body></html>
+

@@ -1,0 +1,63 @@
+﻿1. 確認作業系統 編碼 UTF-8 (Unix系列時)
+   確認作業系統 時區 GMT+8 (這個應該可以不用，但盡量 GMT+8)
+   
+2. 安裝 MySQL
+   建立 MySQL Database Schema astgrail_dev (編碼:UTF-8)
+     CREATE DATABASE astgrail_dev CHARACTER SET = utf8
+   建立 MySQL User astgrail，密碼 astgrail0000
+     CREATE USER astgrail IDENTIFIED BY 'astgrail0000'
+   並給予 Schema astgrail_dev 的所有權限
+     GRANT all ON astgrail_dev.* TO astgrail;
+   
+3. 程式中的資料庫連線設定位於
+   \src\main\resources\props\default.props
+   ( 如果資料庫 使用者 名稱 或 密碼 要改的話，這個也要改 )
+   db.url=jdbc:mysql://localhost/astgrail_dev
+   db.user=astgrail
+   db.pass=astgrail0000
+
+4. 確認有安裝 Java 1.6 以上
+
+5. 第一次執行時，請先打 sbt update
+   然後可以直接跳到下面的 sbt
+                          jetty-run
+   sbt clean 先清除所有建置的部份
+   sbt compile 只編譯程式，而不啟動
+   sbt test    只測試程式(這個通常會錯)
+   啟動 Server 時，不能直接用一行 sbt jetty-run 帶過
+   ( 因為直接打 sbt jetty-run 會啟動伺服器後立刻結束 )
+   要 sbt 
+      jetty-run
+   即先進入 sbt 主控台之後，再輸入 jetty-run
+   另外，於 sbt 主控台離開，可按 exit
+
+6. \src\main\resources\logback.xml 為 程式 log 設定檔
+   可依需求修改
+   
+   一般不改的話，最上層會放最新的 Log，包含
+   astgrail.log       一般 Log
+   astgrail_Warn.log  警告 Log
+   astgrail_Error.log 錯誤 Log
+   
+   而舊有的 Log 會被放置到 log 目錄下
+
+7. 管理資訊
+   請 INSERT 四筆到 AdminManage 下
+   INSERT INTO jinrou.adminmanage('param_name','param_value') values('room_start','2')
+   INSERT INTO jinrou.adminmanage('param_name','param_value') values('room_end','22')
+   INSERT INTO jinrou.adminmanage('param_name','param_value') values('room_count','3')
+   INSERT INTO jinrou.adminmanage('param_name','param_value') values('admin_ip','127.0.0.1')
+   
+   如本例是開放 02:00(凌晨)到 22:00(晚上十點) 允許開村，如要 24 小時開放請設 0 到 24
+   room_count 是設最大村數目前是寫 3
+
+   admin_ip 是管理者用的 ip 以 ; 分隔，如 127.0.0.1;122.116.192.21
+
+8. 檔案上傳的備份目錄
+   src\main\scala\code\snippet\UserIconSnippet.scala 中
+   第 115 行的 newname3 可設定檔案上傳的備份目錄
+   ( 另檔案上傳會同時傳至 newname1 newname2 newname3 位置 )
+   
+9. Port
+   project\build 下的 LiftProject.scala
+   override val jettyPort = 80 這裡修改

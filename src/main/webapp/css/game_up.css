@@ -1,0 +1,15 @@
+.input-say table{
+  border: 0;
+  border-collapse: collapse;
+}
+.input-say td{vertical-align: top;}
+.input-say input{
+  width: 100px;
+  border: 1px solid #C0C0C0;
+}
+.input-say select{width: 100px;}
+.vote{font-size: 80%;}
+.top-link{
+  margin-left: 5px;
+  font-size: 6pt;
+}

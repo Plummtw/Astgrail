@@ -1,0 +1,446 @@
+@charset "utf-8";
+@import url(role.css);
+/* game_view.php & OutputGameHeader() */
+body{ /* AA 用 */
+  font-family: "ＭＳ Ｐゴシック", "ＭＳＰゴシック", "MSPゴシック", "MS Pゴシック";
+}
+.room{text-decoration:underline;} /* 村のタイトル */
+.room span{
+  font-size: 15pt;
+  font-weight: bold;
+}
+.game-option{ /* ゲームオプション */
+  padding: 3px;
+  vertical-align: top;
+}
+.game-option img{vertical-align: top;}
+.time-table{
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  vertical-align: top;
+}
+.time-table td{
+  padding-left: 5px;
+  border: 1px dotted #CCCCCC;
+  vertical-align: middle;
+  text-align: left;
+}
+.time-table span{
+  margin-left: 1em;
+  font-size: 80%;
+}
+.real-time{ /* リアルタイムの時間表示 */
+  padding-top: 5px;
+  vertical-align: middle;
+}
+.real-time span{font-weight: bold;}
+.real-time input{ /* JavaScript の表示窓 */
+  border: 0px solid;
+  vertical-align: middle;
+  font-size:11pt;
+}
+.system-vote{ /* 投票を促すメッセージ */
+  padding: 7px;
+  background-color: #CC3300;
+  color: #FFFAFA;
+  font-weight: bold;
+}
+/* OutputPlayerList() */
+.player{ /* プレイヤーリスト全体の div */
+  width: 750px;
+  font-size: 10pt;
+}
+.player table{
+  border: 1px dotted #000000;
+  border-spacing: 5px;
+}
+.player table td{
+  vertical-align: top;
+  font-size: 10pt;
+}
+.player table img{border: 2px solid;} /* 枠の色はアイコン毎 */
+.player table td span{font-weight: bold;} /* 役職名 */
+.already-vote{background-color: #FF99FF;} /* ゲーム開始投票済み */
+/* OutputVictory() */
+.victory{ /* 勝敗結果全体の table */
+  margin: 5px 0px;
+  width: 100%;
+  font-size: 120%;
+  font-weight: bold;
+}
+.victory td{
+  width: 100%;
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+.victory-human{ /* 村人勝利 */
+  background-color: #FFFF99;
+  color: #000000;
+}
+.victory-doll{ /* 上海人形勝利 */
+  background-color: #6060FF;
+  color: #FFFAFA;
+}
+.victory-escaper{ /* 逃亡者勝利 */
+  background-color: #606090;
+  color: #FFFAFA;
+}
+.victory-wolf{ /* 人狼勝利 */
+  background-color: #CC0000;
+  color: #FFFAFA;
+}
+.victory-fox{ /* 妖狐勝利 */
+  background-color: #993399;
+  color: #FFFAFA;
+}
+.victory-lovers{ /* 恋人勝利 */
+  background-color: #FFFAFA;
+  color: #FF69B4;
+}
+.victory-quiz{ /* 出題者勝利 */
+  background-color: #9999CC;
+  color: #FFFF99;
+}
+.victory-vampire{ /* 吸血鬼勝利 */
+  background-color: #D000D0;
+  color: #FFFAFA;
+}
+.victory-chiroptera{ /* 蝙蝠勝利 */
+  background-color: #888888;
+  color: #FFFAFA;
+}
+.victory-ogre{ /* 鬼勝利 */
+  background-color: #E09000;
+  color: #FFFAFA;
+}
+.victory-duelist{ /* 決闘者勝利 */
+  background-color: #F05070;
+  color: #FFFAFA;
+}
+.victory-draw{ /* 引き分け */
+  background-color: #CCEECC;
+  color: #000000;
+}
+.victory-lose{ /* 敗北 */
+  background-color: #000000;
+  color: #FFFAFA;
+}
+.victory-none{ /* 廃村 */
+  background-color: #AAAAAA;
+  color: #FFFAFA;
+}
+/* OutputRevoteList() */
+.revote{ /* 再投票メッセージ */
+  padding: 0px 3em;
+  background-color: #FF0000;
+  color: #FFFAFA; /* snow */
+  font-size: 14pt;
+  font-weight: bold;
+}
+/* OutoutTalkLog() & OutputHeavenTalkLog() */
+.talk{ /* 発言全体の table */
+  border: 0;
+  border-collapse: collapse;
+  width: 100%
+}
+.normal{  /* 通常の発言 */
+  font-size:12pt;
+}
+.red_normal{  /* 赤通常の発言 */
+  color: #CC0000; /* 赤文字*/
+  font-size:12pt;
+}
+.blue_normal{  /* 青通常の発言 */
+  color: #1E90FF; /* 青文字*/
+  font-size:12pt;
+}
+.purple_normal{  /* 紫通常の発言 */
+  color: #CC66CC; /* 紫文字*/
+  font-size:12pt;
+}
+.tangerine_normal{  /* 橘通常の発言 */
+  color: #FF9966; /* 橘文字*/
+  font-size:12pt;
+}
+.green_normal{  /* 綠通常の発言 */
+  color: #33CC99; /* 綠文字*/
+  font-size:12pt;
+}
+.strong{  /* 大声 */
+  font-size: 20pt;
+  font-weight: bold;
+}
+.red_strong{  /* 赤大声 */
+  color: #CC0000; /* 赤文字*/
+  font-size: 20pt;
+  font-weight: bold;
+}
+.blue_strong{  /* 青大声 */
+  color: #1E90FF; /* 青文字*/
+  font-size: 20pt;
+  font-weight: bold;
+}
+.purple_strong{  /* 紫大声 */
+  color: #CC66CC; /* 紫文字*/
+  font-size: 20pt;
+  font-weight: bold;
+}
+.tangerine_strong{  /* 橘大声 */
+  color: #FF9966; /* 橘文字*/
+  font-size: 20pt;
+  font-weight: bold;
+}
+.green_strong{  /* 綠大声 */
+  color: #33CC99; /* 綠文字*/
+  font-size: 20pt;
+  font-weight: bold;
+}
+.slightly{  /* 稍大声 */
+  font-size: 16pt;
+}
+.red_slightly{  /* 赤稍大声 */
+  color: #CC0000; /* 赤文字*/
+  font-size: 16pt;
+}
+.blue_slightly{  /* 青稍大声 */
+  color: #1E90FF; /* 青文字*/
+  font-size: 16pt;
+}
+.purple_slightly{  /* 紫稍大声 */
+  color: #CC66CC; /* 紫文字*/
+  font-size: 16pt;
+}
+.tangerine_slightly{  /* 橘稍大声 */
+  color: #FF9966; /* 橘文字*/
+  font-size: 16pt;
+}
+.green_slightly{  /* 綠稍大声 */
+  color: #33CC99; /* 綠文字*/
+  font-size: 16pt;
+}
+.weak{ /* 小声 */
+  /* color: #1E90FF; . 青文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.red_weak{ /* 赤小声 */
+  color: #CC0000; /* 赤文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.blue_weak{ /* 青小声 */
+  color: #1E90FF; /* 青文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.purple_weak{ /* 紫小声 */
+  color: #CC66CC; /* 紫文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.tangerine_weak{ /* 橘小声 */
+  color: #FF9966; /* 橘文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.green_weak{ /* 綠小声 */
+  color: #33CC99; /* 綠文字 */
+  font-size: 8pt;
+  font-weight: lighter;
+}
+.add-role{font-size: 8pt;} /* 役職表示オプション用 */
+.user-talk{ /* プレイヤーの発言 */
+  text-align: left;
+  vertical-align: middle;
+}
+.user-talk td{border-bottom: 1px dashed #C0C0C0;}
+.user-name{width: 200px;} /* プレイヤー名 */
+.user-name span{font-size: 8pt;} /* ～の独り言など */
+.say{ /* 発言の中身 */
+  margin-left: 1px;
+  width: 1000px;
+  /* 草対策：ブラウザ依存があるのでひとまず不使用
+  word-wrap: break-word;
+  word-break:break-all;
+  */
+}
+/* OutputTalkLog() */
+.system-message{text-align: left;} /* システムメッセージ */
+.system-message td{
+  border-top: 1px dashed #C0C0C0;
+  width: 1000px;
+  padding-left: 6em;
+  color: #FFFAFA;
+  font-weight: bold;
+}
+.objection-male{  background-color: #336699;} /* 異議あり(男) */
+.objection-female{background-color: #FF0099;} /* 異議あり(女) */
+.game-start{      background-color: #999900;} /* ゲーム開始投票 (現在は不使用) */
+.kick-do{         background-color: #AAAA33;} /* キック投票 */
+.vote-do{         background-color: #999900;} /* 処刑投票 */
+.mage-do{         background-color: #9933FF;} /* 占い師 */
+.guard-do{        background-color: #3399FF;} /* 狩人 */
+.revive-do{       background-color: #009966;} /* 猫又 */
+.assassin-do{     background-color: #904040;} /* 暗殺者 */
+.mind-scanner-do{ background-color: #A0A000;} /* さとり */
+.wizard-do{       background-color: #BB88CC;} /* 魔法使い */
+.escape-do{       background-color: #606090;} /* 逃亡者 */
+.wolf-eat{        background-color: #CC3300;} /* 人狼 */
+.cupid-do{        background-color: #FF88DD;} /* キューピッド */
+.vampire-do{      background-color: #A000A0;} /* 吸血鬼 */
+.fairy-do{        background-color: #666666;} /* 妖精 */
+.ogre-do{         background-color: #C07000;} /* 鬼 */
+.duelist-do{      background-color: #D04060;} /* 決闘者 */
+.mania-do{        background-color: #C0A060;} /* 神話マニア */
+.system-user{ /* システムユーザーの発言 */
+  width: 1000px;
+  padding-left: 6em;
+  background-color: #EFEFEF;
+  color: #000000;
+  font-weight: bold;
+}
+.dummy-boy{ /* 身代わり君の発言 */
+  width: 1000px;
+  /* padding-left: 6em; */
+  background-color: #F0F8FF;
+  color: #000000;
+  font-weight: bold;
+}
+.talk-common{font-size: 8pt;} /* 共有者の名前 (共有者以外用) */
+.say-common{ font-size: 6pt;} /* 共有者の発言 (共有者以外用) */
+.night-self-talk{color: #FFFAFA;} /* 夜の独り言 */
+.night-wolf{     color: #FFCCFF;} /* 狼の遠吠え */
+.night-common{   color: #CCFFCC;} /* 共有者の会話 */
+.night-fox{      color: #FAFA66;} /* 狐の念話 */
+/* OutputLastWords() & OutputSelfLastWords() */
+.lastwords{ /* 遺言全体の table */
+  border: 0;
+  border-spacing: 5px;
+  width: 100%;
+  background-color: #DDEEFF;
+}
+.lastwords td{
+  border-top: 1px dashed #C0C0C0;
+  color: #000000;
+}
+.lastwords-title{ /* 名前 */
+  width: 140px;
+  vertical-align: middle;
+  text-align: left;
+}
+.lastwords-title span{ /*～「さんの遺言」*/
+  margin-right: 1px;
+  font-size: 80%;
+}
+.lastwords-body{ /* 本文 */
+  width: 1000px;
+  vertical-align: top;
+}
+/* OutputLastWords() */
+.system-lastwords{ /* 遺言のシステムメッセージの table */
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #CCDDFF;
+  color: #000000;
+}
+.system-lastwords td{ /* インデントは他のシステムメッセージと合わせる */
+  padding-left: 6em;
+  text-align: left;
+  font-weight: bold;
+}
+/* OutputDeadManType() */
+.dead-type{
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #FFFAFA;
+  color: #990000;
+  font-weight:bold;
+}
+.dead-type td{
+  padding-left: 6em;
+  width: 100%;
+  height: 35px;
+  text-align: left;
+  vertical-align: middle;
+}
+.dead-type-vote{        color: #666600;}
+.dead-type-revive{      color: #009966;}
+.dead-type-lovers{      color: #FF66CC;}
+.dead-type-fairy{       color: #888888;}
+.dead-type-sudden-death{color: #33CCFF;}
+/* GenerateWeatherReport() */
+.weather{
+  padding: 7px 0 7px 6em;
+  background-color: #CCDDFF;
+  color: #000000;
+  font-weight: bold;
+}
+.weather span{color: #990000;}
+/* OutputVoteListDay() */
+.vote-list{ /* 投票結果の table */
+  border: 2px solid;
+  border-collapse: collapse;
+  font-size:12pt;
+}
+.vote-list td{
+  border: 1px solid;
+  padding: 5px;
+}
+.vote-times{text-align: center;} /* 投票回数 */
+.vote-name{ /* ユーザ名 */
+  text-align: left;
+  font-weight: bold;
+}
+/* OutputGameHeader() */
+.game-header{
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+.view-option{ /* 表示オプションのリンク */
+  border: 0;
+  text-align: right;
+  font-size: 80%;
+}
+.caution{ /* ゲーム開始前の注意 */
+  padding: 7px 0;
+  background-color: #009900;
+  color: #FFFAFA;
+  text-align: center;
+  font-weight: bold;
+}
+.caution span{font-size: 80%;}
+.objection{ /* 「異議あり」ボタン */
+  vertical-align: middle;
+  text-align: right;
+}
+/* OutputAbility() */
+.ability{ /* 共通デザイン */
+  padding: 0 3em;
+  color: #FFFAFA;
+  font-size: 14pt;
+  font-weight: bold;
+}
+.ability-dead{background-color: #CC0000;} /* 死んでいる場合 */
+.ability-partner{ /* 仲間の表示 */
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.ability-partner td{
+  border: 1px solid;
+  vertical-align: middle;
+}
+.ability-result{ /* 能力の結果表示 */
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
+.ability-result td{
+  border: 0px solid #000000;
+  vertical-align: middle;
+}
+/* CheckSelfVote() */
+.self-vote{margin: 5px 0;}

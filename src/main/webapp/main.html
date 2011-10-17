@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <body class="lift:content_id=main">
+  <div id="main" class="lift:surround?with=astgrail;at=content">    
+  <head>
+    <link rel="stylesheet" href="css/main.css"></link>
+    <script>
+    </script>
+  </head>  
+  <div class="comment">星杯傳說～鸚鵡實驗站</div>
+  <noscript>＜＜請安裝JavaScript＞＞</noscript>
+  <table class="main">
+    <tr>
+      <td valign="top">
+        <div class="menu">選單</div>
+        <ul>
+          <li><a href="script_info.html">伺服器資訊</a></li>
+          <li><a href="version.html">版本歷史</a></li>
+          <li><a href="rule.html">遊戲規則</a></li>
+          <li><a href="oldlog_list.html">遊戲紀錄</a>(<a href="oldlog_list.html?filter=noabandon">過濾廢棄</a>)</li>
+          <li><a href="icon_view.html">頭像一覽</a></li>
+          <li><a href="icon_upload.html">頭像上傳</a></li>
+          <li><a href="faq.html">Ｑ＆Ａ</a></li>
+          <li><a href="stat.html">統計資料</a>(<a href="stat.html?count=25">25</a>、<a href="stat.html?count=50">50</a>、<a href="stat.html?count=100">100</a>)</li>
+          <li><a href="bbs_list.html">討論區</a></li>
+        </ul>
+        <div class="menu">外部連結</div>
+        <ul>
+          <li><a href="http://pc357308.no-ip.org/main.html">暗影獵人</a></li>
+        </ul>
+      </td>
+      <td>
+        <fieldset>
+          <legend>伺服器公告</legend>
+          <div class="information"><h2>▉版本 0.0.4A Build 1001017</h2>
+          <h3>本伺服器M群：group576934@msnzone.cn</h3>
+          <h1>▉公告</h1>
+          <font size="4">
+            目前遊戲於DEBUG MODE下執行，速度會比正式版慢，<br/>
+            登入遊戲後會自動更新，請不要按 F5。<br/>
+            但若發言或按鈕沒反應時，可能為登出狀態，可按 F5 重新登入。<br/>
+          </font>
+          <font size="3">
+            測試須知：有些能力是完全沒測過的，有 BUG 是正常的。<br/>
+            發現 BUG 麻煩抓圖並回報。<br/>
+            測試期間隨時可能切掉網站以便查閱記錄。<br/>
+          </font>
+          <font size="2">
+            目前版本的內容：<br/>
+            1. 角色目前部分已完成(未測完可能有 BUG )。<br/>
+            2. 目前流程順序和實體版不同，此為鸚鵡版因程式架構暫時之設定，不列為 BUG。<br/>
+          </font>
+          <br/>
+          <h1>▉已知問題(研究中)</h1>
+          <font size="2">
+            1. 登入時有時會變成以上一次的資料登入(如上一村)，目前請先重開瀏覽器或更換瀏覽器。<br/>
+            2. 如果發現流程出現問題時，請抓圖並記錄一下時間、村號及回合數，以利查閱問題。<br/>
+          </font>
+          <br/>
+          <h1>▉預告</h1>
+          <font size="2">
+          </font>
+          <br/>
+          <font size="2">
+          <h4>▉製作＆管理 <span class="parrot">鸚鵡</span><br/>
+            ▉測試協力 <br/>
+            ▉構想提供 <br/>
+          </h4></font></div>
+        </fieldset>
+        <fieldset>
+          <legend>村莊一覽</legend>
+          <div class="lift:RoomListSnippet">
+          </div>
+        </fieldset>
+        <div class="lift:Msgs?showAll=true"></div>
+        <fieldset>
+        <legend>村莊建立</legend>
+        <div id="form" class="lift:RoomCreateSnippet?form=post"> 
+        <table>
+        <tr>
+          <td><label>村莊名稱(20字)：</label></td>
+          <td><input name="room_name"    size="45"/> 村</td>
+        </tr>
+        <tr>
+          <td><label>村莊附註(20字)：</label></td>
+          <td><input name="room_comment" size="45"/></td>
+        </tr>
+        <tr>
+          <td><label>最大人數：</label></td>
+          <td><input name="max_user"/></td>
+        </tr>
+                <tr>
+          <td><label>測試模式：</label></td>
+          <td><input name="test_mode"/>(測試模式可以看到所有人的手牌及蓋牌)</td>
+        </tr>
+        <tr>
+          <td><label>希望陣營：</label></td>
+          <td><input name="wish_align"/>(可選擇希望的陣營，1/6失敗率)</td>
+        </tr>
+        <tr>
+          <td><label>希望職業：</label></td>
+          <td><input name="wish_role"/>(可選擇希望的職業，1/3失敗率)</td>
+        </tr>
+        <tr>
+          <td><label>亂數位置：</label></td>
+          <td><input name="random_position"/>(遊戲開始時調整行動次序)</td>
+        </tr>
+        <tr>
+          <td><label>限制時間：</label></td>
+          <td>行動：<input name="action_time"   value="15" size="3"/>秒
+              反應：<input name="reaction_time" value="15" size="3"/>秒
+          </td>
+        </tr>
+        <tr>
+          <td><label>最大星數：</label></td>
+          <td><input name="max_stars"/></td>
+        </tr>
+        <tr><td class="make" colspan="2"><input id="submit" type="submit" value=" 作成 "/></td></tr>
+        </table>
+        </div>
+        </fieldset>
+      </td>
+    </tr>
+  </table>
+  <div class="footer">Powered by <a href="http://liftweb.net/">Liftweb</a>.Copyright 2011, Plummtw</div>
+  </div>
+  </body>
+</html>

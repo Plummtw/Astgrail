@@ -1,0 +1,12 @@
+.selector select{width: 12em;}
+.page-link{text-align: right;}
+td.icon-details{ padding: 4px;}
+td.icon-details .icon_wrapper{
+  display: block;
+  float: left;
+}
+td.icon-details ul{
+  list-style: none;
+  float: left;
+  padding: 0;
+}

@@ -1,0 +1,8 @@
+db.class=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://localhost/astgrail_dev
+db.user=astgrail
+db.pass=astgrail0000
+
+mail.host=smtp.gmail.com
+mail.user=astgrail
+mail.password=astgrail0000

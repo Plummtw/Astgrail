@@ -1,0 +1,17 @@
+body{
+  background-color: #FFF5EE; /* 背景色 */
+  color: #000000; /* 文字色 */
+}
+a:link{   color: #0000FF;}
+a:visited{color: #0000FF;}
+a:active{ color: #FF0000;}
+a:hover{  color: #FF0000;}
+.real-time input{
+  background-color: #FFF5EE; /* body の背景色と揃えてください */
+  color: #000000; /* body の文字色と揃えてください */
+}
+.vote-page{border-color: #000000;}
+.vote-page td{
+  border-color: #000000;
+  color: #000000; /* body の文字色と揃えてください */
+}

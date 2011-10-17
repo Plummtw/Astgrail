@@ -1,0 +1,20 @@
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '明灰', 'user_icons/001.gif', '45', '45', '#DDDDDD', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '暗灰', 'user_icons/002.gif', '45', '45', '#999999"', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '黃色', 'user_icons/003.gif', '45', '45', '#FFD700', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '橘色', 'user_icons/004.gif', '45', '45', '#FF9900', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '紅色', 'user_icons/005.gif', '45', '45', '#FF0000', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '水色', 'user_icons/006.gif', '45', '45', '#99CCFF', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '青', 'user_icons/007.gif', '45', '45', '#0066FF', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '綠', 'user_icons/008.gif', '45', '45', '#00EE00', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '紫', 'user_icons/009.gif', '45', '45', '#CC00CC', now(), now());
+insert into shadowhunter_dev.usericon(icon_group, icon_name, icon_filename, icon_width, icon_height, color, createdAt, updatedAt)
+values('0', '櫻花色', 'user_icons/010.gif', '45', '45', '#FF9999', now(), now());

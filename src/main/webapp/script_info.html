@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <body class="lift:content_id=main">
+  <div id="main" class="lift:surround?with=astgrail_sub;at=content">
+  <head>
+    <link rel="stylesheet" href="css/rule.css"></link>
+  </head>
+    <div>
+      <p>
+      本遊戲使用 Scala 2.8.1 (程式語言) 之 Liftweb 2.4 (網頁架構) 製作。<br/>
+      遊戲中使用 Comet 固定連線機制，故不需要一段時間重連網頁，或類似 Ajax 背景重連網頁。<br/>
+      資料庫使用 MySQL。<br/>
+      </p>
+      
+      <p>
+      什麼是 Scala 語言？<br/>
+      <a href="http://www.scala-lang.org/">http://www.scala-lang.org/</a><br/>
+      Scala 語言是一種物件導向加函數式語言，執行於 Java 虛擬機(JVM)上。<br/>
+      Scala 語言擁有靜態語言嚴謹的型別檢查及動態語言的靈活性，<br/>
+      程式不管大小，用 Scala 語言寫起來都是很愉快的，<br/>
+      小的程式用 Scala 簡便的語言，不用太多行就可以解決，<br/>
+      而大的程式 Scala 也擁有完整的架構讓程式不致於太亂，<br/>
+      加上 Scala 語言本身執行速度快，逼近 Java 的效能，<br/>
+      惟 Scala 語言多樣式的寫法對於新手入門比較困難(加上需要會Java)。<br/>
+      </p>
+      
+      <p>
+      什麼是 Liftweb 網頁架構？<br/>
+      <a href="http://liftweb.net/">http://liftweb.net/</a><br/>
+      Liftweb 又簡稱 Lift，算是 Scala 語言的網頁架構之一。<br/>
+      Liftweb 算是一種重量型的架構，它的功能豐富，但是耗費的資源也高。<br/>
+      Liftweb 網頁架構提供了多種的模式(寫法)，就算同樣用 Liftweb 開發的，<br/>
+      也可能因為寫法不同而迥然不同，然後 Liftweb 文件不完整，<br/>
+      而且各種寫法的混雜在一起，增加程式設計師撰寫的難度。<br/>
+      </p>
+      
+      <p>
+      什麼是 Comet 架構？<br/>
+      一般網頁架構是每次按連結時，重新連線，傳送資料之後，斷線。<br/>
+      但是需要定期更新資料的，大多採用一段時間之後重新連線，<br/>
+      有些程式雖然沒有手動連線，但是系統仍然在背景一定時間重新讀取資料，<br/>
+      這種程式雖然好寫，但是間隔不容易調整，太短可能浪費頻寬，<br/>
+      太長的話，又要等到時間到了才更新，浪費時間。<br/>
+      Comet 則是一種固定連線式的架構，網頁一旦開啟，連線一直保留的，<br/>
+      如果伺服器有新資料了，可以馬上傳送給瀏覽器，不用等瀏覽器下一次重新連線。<br/>
+      </p>
+      
+      <p>
+      如果你對 Scala、Liftweb 等等有興趣的人，可以進一步和我連絡。<br/>
+      </p>
+      
+      <p>
+      為什麼登入登出會有問題？<br/>
+      在 Comet 架構之下，按登出並不會馬上登出，一般要等 10 至 60 秒。<br/>
+      如果這段時間登入，可能會登入到前一個的，因為前一個尚未登出完成。<br/>
+      另外就算登入成功，也有可能在 10 至 60 秒內被登出，必須要再重新登入。<br/>
+      </p>
+    </div>
+  </div>
+  </body>
+</html>

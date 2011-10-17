@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <body class="lift:content_id=main">
+  <div id="main" class="lift:surround?with=astgrail;at=content">    
+  <div class="lift:GameCheckSnippet?check=view"></div>
+  <div class="lift:GameViewSnippet">
+  <head>
+    <link rel="stylesheet" href="css/game_view.css"></link>
+    <!-- script type="text/javascript" src="javascript/change_css.js"></script -->
+    <meta name="refresh" http-equiv="refresh" content=""/>
+  </head> 
+  <a id="game_top"></a>
+  <div class="lift:Msgs?showAll=true"></div>
+  <table class="login">
+    <tr>
+      <td class="room"><span id="room_name"></span> [<span id="room_no"></span>號村]<br/><span id="room_comment"></span></td>
+      <td class="login-link">
+        <a id="refresh">[更新]</a>
+        [自動更新](<span id="refresh-list"></span>)
+        <a href="main.html">[返回]</a></td></tr>
+     <tr>
+      <td><form action="login.html" id="login_form" method="post">
+        <label>帳號</label><input type="text" name="uname" size="20" />
+        <label>密碼</label><input type="password" class="login-password" name="password" size="20" />
+        <input type="hidden" name="room_no" value="login" />
+        <input type="hidden" name="command" value="login" />
+        <input type="submit" value="登入" />
+      </form></td>
+      <td class="login-link"><a id="room-register"><span>[村民登錄]</span></a></td>
+    </tr>
+  </table>
+  <div id="time-table" class="time-table"></div>
+  <div id="user-table" class="user-table"></div>
+  <div id="card-table" class="card-table"></div>
+  <div id="team-table" class="team-table"></div>
+  <div id="talk-table" class="talk-table"></div>
+  </div>
+  </div>
+  </body>
+</html>
+
