@@ -470,7 +470,7 @@ object MessageHelper extends Logger {
                            CardEnum.get_card(talk.message_flags.is).card_name + ")" , true, "hunter-do")   
       case MTypeEnum.ACTION_NECROMANCER_DEATHTOUCH =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 使用死亡之觸(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 使用死亡之觸(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")(使用治療：" + talk.message_flags2.is + ")"
                            , true, "hunter-do") 
       case MTypeEnum.ACTION_NECROMANCER_GRAVEFALL =>
@@ -496,7 +496,7 @@ object MessageHelper extends Logger {
         
       case MTypeEnum.ACTION_ADVENTURER_DECEIVE     =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 詐欺(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 詐欺(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")(屬性：" + CardAttrEnum.cname(talk.message_flags2.is) + ")"
                            , true, "hunter-do") 
       case MTypeEnum.ACTION_ADVENTURER_ADDON       =>
@@ -505,14 +505,14 @@ object MessageHelper extends Logger {
         simple_message_tag(useractioner.handle_name.is + " 使用偷天換日" , true, "hunter-do")   
   
       case MTypeEnum.ACTION_BISHOP_HOLYBLESS      =>
-        simple_message_tag(useractioner.handle_name.is + " 使用神聖祈福(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+        simple_message_tag(useractioner.handle_name.is + " 使用神聖祈福(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")", true, "hunter-do") 
       case MTypeEnum.ACTION_BISHOP_HOLYWATER      =>
         val message = 
           if (reveal_mode || (useractioner.id.is == currentuserentry_id))
-            "(" + CardEnum.get_card(talk.message_flags.is).card_name + ")"
-          else ""
-        simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用水之神力(丟棄：" + CardEnum.get_card(talk.message_flags.is).card_name +
+            "(" + CardEnum.get_card(talk.message_flags2.is).card_name + ")"
+          else "(1張)"
+        simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用水之神力(" + CardEnum.get_card(talk.message_flags.is).card_name +
                            ")" + message , true, "hunter-do") 
       case MTypeEnum.ACTION_BISHOP_HOLYCONTRACT   =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用神聖契約(" + talk.message_flags.is +
@@ -523,22 +523,22 @@ object MessageHelper extends Logger {
           else if (talk.message_flags2.is == "2") "(增加治癒)"
           else "(？？)"
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 使用神聖領域(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 使用神聖領域(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")" + additional , true, "hunter-do") 
       case MTypeEnum.ACTION_SAGE_REFLECT           =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 使用法術反彈(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 使用法術反彈(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")", true, "hunter-do") 
       case MTypeEnum.ACTION_SAGE_MAGICBOOK         =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 使用魔道法典(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 使用魔道法典(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")", true, "hunter-do") 
       case MTypeEnum.ACTION_SAGE_HOLYBOOK          =>
         val actionees = 
           try { talk.message_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, userentrys).handle_name.is) }
           catch {case e: Exception => List() }
         simple_message_tag(useractioner.handle_name.is + " 對 " + actionees.mkString(",") + 
-                           " 使用聖潔法典(丟棄：" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
+                           " 使用聖潔法典(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
                            ")", true, "hunter-do") 
       case MTypeEnum.ACTION_RUNEMAGE_THUNDERRUNE   =>
         val message_flags = talk.message_flags.is.split(",")
@@ -557,7 +557,7 @@ object MessageHelper extends Logger {
           try { talk.message_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, userentrys).handle_name.is) }
           catch {case e: Exception => List() }
         simple_message_tag(useractioner.handle_name.is + " 對 " + actionees.mkString(",") + 
-                           " 使用靈符雷鳴(丟棄：" + card.card_name  + ")" + message2 + message3 , true, "hunter-do") 
+                           " 使用靈符雷鳴(" + card.card_name  + ")" + message2 + message3 , true, "hunter-do") 
       case MTypeEnum.ACTION_RUNEMAGE_AIRRUNE       =>
         val message_flags = talk.message_flags.is.split(",")
         val card          = CardEnum.get_card(message_flags(0))
@@ -572,7 +572,7 @@ object MessageHelper extends Logger {
           try { talk.message_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, userentrys).handle_name.is) }
           catch {case e: Exception => List() }
         simple_message_tag(useractioner.handle_name.is + " 對 " + actionees.mkString(",") + 
-                           " 使用靈符風行(丟棄：" + card.card_name  + ")" + message2, true, "hunter-do")
+                           " 使用靈符風行(" + card.card_name  + ")" + message2, true, "hunter-do")
       case MTypeEnum.ACTION_RUNEMAGE_AIRRUNE_DISCARD =>
         if (reveal_mode || (useractioner.id.is == currentuserentry_id) || (useractionee.id.is == currentuserentry_id))
           simple_message_tag(useractioner.handle_name.is + " 丟棄 " + CardEnum.get_card(talk.message_flags.is).card_name 

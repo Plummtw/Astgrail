@@ -85,14 +85,14 @@ object ActionHelper extends Logger {
     else if ((gameo.userentrys.filter(x => (x.get_role == RoleBrave) && (x.target_user.is == actioner.id.is)).length != 0)) {
       warn ("RoleBrave Taunt")
       val activated_skills =
-        role.skills(RoomPhaseEnum.MAIN) diff role.skills(RoomPhaseEnum.MAIN_NO_ACTIVATE)
+        role.role_skills(RoomPhaseEnum.MAIN) diff role.role_skills(RoomPhaseEnum.MAIN_NO_ACTIVATE)
       val result1 = 
         if ((actioner.get_role == RoleMonk) && (actioner.tapped.is) && (UserEntry.get(actioner.target_user.is, gameo.userentrys).get_role != RoleBrave))
           List(ActionMonk100DragonsRemove, ActionSkipTurn)
         else if ((actioner.get_role == RoleJudicator) && (actioner.yellow_index.is >= RoleJudicator.role_yellow_index_max))
           List(ActionSkipTurn)
         else
-          List(ActionAttack, ActionSkipTurn)
+          List(ActionAttack, ActionAdventurerDeceive, ActionSkipTurn)
       val result2 =  
         if (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)
           filter_enabled(gameo, actioner, result1 ::: activated_skills)
@@ -109,8 +109,7 @@ object ActionHelper extends Logger {
         filter_enabled(gameo, actioner, List(ActionAttack, ActionMonk100DragonsRemove, ActionMonkMonkGod))
       else
         filter_enabled(gameo, actioner, List(ActionAttack, ActionMonk100DragonsRemove))
-    } 
-    else if ((action_list_in == null) && ((result.isEmpty) || (result == List(ActionRefine))) &&
+    } else if ((action_list_in == null) && ((result.isEmpty) || (result == List(ActionRefine))) &&
              (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString))
       List(ActionCardRenew)
     else if ((actioner.get_role == RoleMagicSword) && (CardPool.in_hand(actioner, gameo.card_list).length > 0) &&
@@ -123,8 +122,7 @@ object ActionHelper extends Logger {
         List(ActionCardRenew)
       else
         result1
-    }
-    else
+    } else
       result
   } 
   
@@ -2073,7 +2071,7 @@ object ActionHelper extends Logger {
           if (enemyteam.hasnt_team_flag(UserEntryTeamFlagEnum.MORALGUARD))
             enemyteam.add_team_flag(UserEntryTeamFlagEnum.MORALGUARD).save
         }
-        GameProcessor.process_check_heal(gameo, actionee, actionee2)
+        GameProcessor.process_post_heal(gameo, actionee, actionee2)
       case MTypeEnum.ACTION_BUTTERFLY_MIRRORFLOWER   =>  
         val roomphase = gameo.roomphase
         val actionee  = UserEntry.get(roomphase.actionee_id, gameo.userentrys)

@@ -96,6 +96,15 @@ class RoleData(val enum : RoleEnum.Value, val name : String, val level : Int,
       basic_skills_list ::: role_skills_list
     }
   }
+  
+  def role_skills(roomphaseenum : RoomPhaseEnum.Value)  : List[ActionData]= {
+    warn("skills : " + roomphaseenum.toString)
+    val role_skills_list = role_skills_hash.get(roomphaseenum) match {
+      case Some(x) => x
+      case xs      => List()
+    }
+    role_skills_list
+  }
     
 }
 

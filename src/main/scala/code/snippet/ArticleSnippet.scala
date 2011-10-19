@@ -222,7 +222,7 @@ class ArticleSnippet {
         {for (article <- articles) yield  
           Seq(<tr class="table3"><td>{article.handle_name.is}{article.trip_link}</td></tr>,
              <tr class="table4"><td>{Unparsed(article.content.is)}</td></tr>,
-             <tr class="table2"><td>{article.createdAt.toString}</td></tr>)}
+             <tr class="table2"><td>{article.createdAt.is}</td></tr>)}
       </table>
     
     "#article-table *" #> article_table

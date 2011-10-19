@@ -30,8 +30,6 @@ import org.plummtw.astgrail.heavy.GameProcessor
 class StatSnippet {
   //val stat_counts        = List(10,25,50,100,200,300,400,500)
   def stat = {
-  /*
-    
     var room_wins_hash = scala.collection.mutable.Map[String, Int]()
     var total_wins     = 0
     
@@ -52,7 +50,7 @@ class StatSnippet {
           val room_userentrys = userentrys.filter(x => (x.room_id.is == room.id.is) && (!x.revoked.is))
           
           room_userentrys.foreach { room_userentry =>
-            val role = room_userentry.get_real_role
+            val role = room_userentry.get_role
             val role_str = role.role_enum.toString
             
             val role_appear_prev_count =
@@ -61,7 +59,7 @@ class StatSnippet {
             
             role_appears_hash.put(role_str, role_appear_prev_count + 1)
             
-            if (GameProcessor.check_user_victory(room_userentry, victory)) {
+            if (room.victory_all.is.indexOf(role_str) != -1) {
               val role_win_prev_count =
               if (role_wins_hash.contains(role_str)) role_wins_hash.get(role_str).get
               else 0
@@ -87,11 +85,8 @@ class StatSnippet {
       else {
         var result : NodeSeq = Seq()
         val room_wins = List(
-          RoomVictoryEnum.SHADOW_WIN,
-          RoomVictoryEnum.HUNTER_WIN,
-          RoomVictoryEnum.DUAL_WIN,
-          RoomVictoryEnum.NEUTRAL_WIN,
-          RoomVictoryEnum.LOVER_WIN,
+          RoomVictoryEnum.RED_WIN,
+          RoomVictoryEnum.BLUE_WIN,
           RoomVictoryEnum.DRAW)
         
         result ++= <table>
@@ -136,8 +131,7 @@ class StatSnippet {
                              MaxRows(count_room * 2),
                              OrderBy(Room.id, Descending))
     val userentrys = UserEntry.findAll(By_>(UserEntry.room_id, rooms.last.id.is - 1))
-    */
 
-    "#stat-table *" #> <span></span> //stat_table(rooms, userentrys, count_room)
+    "#stat-table *" #> stat_table(rooms, userentrys, count_room)
   }
 }

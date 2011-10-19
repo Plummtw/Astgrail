@@ -422,7 +422,8 @@ object ActionRefine extends ActionData(MTypeEnum.ACTION_REFINE, "提煉") {
     //val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
     val role = actioner.get_role
     
-    (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
+    (actioner.gems.is + actioner.crystals.is < actioner.energy_max) &&
+    (userentryteam.gems.is + userentryteam.crystals.is > 0)
     //if (role.role_is_gem_only)
     //  (userentryteam.gems.is >= 1) &&
     //  (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
@@ -727,7 +728,7 @@ object ActionSealerFiveSeal extends ActionMagic(MTypeEnum.ACTION_SEALER_FIVESEAL
   override def js_command : JsCmd = js_dialog("sealer_fiveseal_dialog")
   
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
-    (actioner.gems.is + actioner.crystals.is > 0)
+    (actioner.gems.is + actioner.crystals.is > 0) && (actioner.target_user.is == 0)
   }
   
   override def targetable_users(gameo : GameObject, actioner : UserEntry) : List[UserEntry] = {
@@ -970,6 +971,10 @@ object ActionJudicatorBalance extends ActionData(MTypeEnum.ACTION_JUDICATOR_BALA
 }
 
 object ActionAdventurerDeceive extends ActionData(MTypeEnum.ACTION_ADVENTURER_DECEIVE, "欺詐") with UserEntryTargetable {
+  override def enabled(gameo : GameObject, actioner : UserEntry)  = {
+    (actioner.get_role == RoleAdventurer)
+  }
+  
   override def targetable_users(gameo : GameObject, actioner : UserEntry) : List[UserEntry] = 
     ActionAttack.targetable_users(gameo, actioner)
   
@@ -1289,7 +1294,7 @@ object ActionMonkMonkGod extends ActionData(MTypeEnum.ACTION_MONK_MONKGOD, "鬥�
 
 object ActionBraveTaunt extends ActionData(MTypeEnum.ACTION_BRAVE_TAUNT, "挑釁") with UserEntryTargetable {
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
-    (actioner.yellow_index.is > 0) 
+    (actioner.yellow_index.is > 0) && (actioner.target_user.is == 0)
   }
   
   override def targetable_users(gameo : GameObject, actioner : UserEntry) : List[UserEntry] = {
@@ -1424,7 +1429,7 @@ object ActionSoulMageSoulMirror extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOU
 
 object ActionSoulMageSoulLink extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOULLINK, "靈魂鏈結") with UserEntryTargetable {
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
-    (actioner.yellow_index.is > 0) && (actioner.blue_index.is > 0)
+    (actioner.yellow_index.is > 0) && (actioner.blue_index.is > 0) && (actioner.target_user.is == 0)
   }
   
   override def targetable_users(gameo : GameObject, actioner : UserEntry) : List[UserEntry] = {
@@ -1468,6 +1473,10 @@ object ActionMikoBloodCry extends ActionData(MTypeEnum.ACTION_MIKO_BLOODCRY, "�
 }
 
 object ActionMikoStickWith extends ActionData(MTypeEnum.ACTION_MIKO_STICKWITH, "同生共死") with UserEntryTargetable {
+  override def enabled(gameo : GameObject, actioner : UserEntry)  = {
+    (actioner.target_user.is == 0)
+  }
+  
   override def targetable_users(gameo : GameObject, actioner : UserEntry) : List[UserEntry] = 
     gameo.userentrys.filter(x => (!x.revoked.is) && (x.id.is != actioner.id.is))
   
