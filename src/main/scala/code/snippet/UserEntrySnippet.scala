@@ -98,11 +98,6 @@ class UserEntryRegisterSnippet extends StatefulSnippet {
                     return S.redirectTo("room_register.html?&room_no=" + room_id)
       }
       
-      if (room.status.is != RoomStatusEnum.WAITING.toString) {
-        S.error(<b>遊戲已經開始</b>)
-        S.redirectTo("main.html")
-      }
-      
       UserEntryLock.synchronized {
         // 檢查是否 uname 或 handle_name 重複
         val uname_count = UserEntry.count(By(UserEntry.room_id, room_id), By(UserEntry.uname, uname)) +
@@ -123,6 +118,14 @@ class UserEntryRegisterSnippet extends StatefulSnippet {
         }
 
         GameProcessLock.get_lock(room_id).synchronized {
+          Room.find(By(Room.id, room_id)) match {
+            case Full(room) if (room.status.is != RoomStatusEnum.WAITING.toString) => {
+              S.error(<b>遊戲已經開始</b>)
+              S.redirectTo("main.html")
+            }
+            case xs => ;
+          }
+          
           val roomround_box   = RoomRound.find(By(RoomRound.room_id, room_id), OrderBy(RoomRound.round_no, Descending))
           roomround_box match {
             case Full(roomround) if (roomround.round_no.is == 0) =>

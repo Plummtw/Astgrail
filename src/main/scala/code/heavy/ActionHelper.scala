@@ -66,6 +66,7 @@ object ActionHelper extends Logger {
   }
   
   def enabled_action_list(gameo : GameObject, actioner : UserEntry, action_list_in : List[ActionData] = null) : List[ActionData] = {
+    val role = actioner.get_role
     val action_list0 = 
       List()
     val action_list1 =
@@ -74,37 +75,49 @@ object ActionHelper extends Logger {
       else 
         action_list(gameo, actioner)
       
+    val normal_actions = List(RoomPhaseEnum.MAIN.toString, RoomPhaseEnum.MAIN_NO_ACTIVATE.toString,
+      RoomPhaseEnum.ATTACK.toString, RoomPhaseEnum.MAGIC.toString, RoomPhaseEnum.ATTACK_OR_MAGIC.toString)
     val result = filter_enabled(gameo, actioner, action_list1)
-
-    if ((gameo.userentrys.filter(x => (x.get_role == RoleBrave) && (x.target_user.is == actioner.id.is)).length != 0) && 
-        (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)) {
+    
+    if ((!normal_actions.contains(gameo.roomphase.phase_type.is)) ||
+        (gameo.roomphase.actioner_id.is != actioner.id.is))
+      result
+    else if ((gameo.userentrys.filter(x => (x.get_role == RoleBrave) && (x.target_user.is == actioner.id.is)).length != 0)) {
       warn ("RoleBrave Taunt")
-      val result2 = filter_enabled(gameo, actioner, List(ActionAttack, ActionSkipTurn))
-      warn ("Action : " + result2.toString)
-      if ((actioner.get_role == RoleMonk) && (actioner.tapped.is) && (UserEntry.get(actioner.target_user.is, gameo.userentrys).get_role != RoleBrave))
-        List(ActionMonk100DragonsRemove, ActionSkipTurn)
-      else if ((actioner.get_role == RoleJudicator) && (actioner.yellow_index.is >= RoleJudicator.role_yellow_index_max))
-        List(ActionSkipTurn)
-        result2
-    } else if ((actioner.get_role == RoleJudicator) && (actioner.yellow_index.is >= RoleJudicator.role_yellow_index_max) &&
-         (gameo.roomphase.actioner_id.is == actioner.id.is) &&
-         (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)) 
+      val activated_skills =
+        role.skills(RoomPhaseEnum.MAIN) diff role.skills(RoomPhaseEnum.MAIN_NO_ACTIVATE)
+      val result1 = 
+        if ((actioner.get_role == RoleMonk) && (actioner.tapped.is) && (UserEntry.get(actioner.target_user.is, gameo.userentrys).get_role != RoleBrave))
+          List(ActionMonk100DragonsRemove, ActionSkipTurn)
+        else if ((actioner.get_role == RoleJudicator) && (actioner.yellow_index.is >= RoleJudicator.role_yellow_index_max))
+          List(ActionSkipTurn)
+        else
+          List(ActionAttack, ActionSkipTurn)
+      val result2 =  
+        if (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)
+          filter_enabled(gameo, actioner, result1 ::: activated_skills)
+        else  
+          filter_enabled(gameo, actioner, result1)
+      result2
+    } else if ((actioner.get_role == RoleJudicator) && (actioner.yellow_index.is >= RoleJudicator.role_yellow_index_max)) {
+      if (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)
+        filter_enabled(gameo, actioner, List(ActionJudicatorBreakRitual, ActionJudicatorFinalJudge, ActionJudicatorRitual))
+      else
         List(ActionJudicatorFinalJudge)
-    else if ((actioner.get_role == RoleMonk) && (actioner.tapped.is) &&
-         (gameo.roomphase.actioner_id.is == actioner.id.is) &&
-         (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)) 
+    } else if ((actioner.get_role == RoleMonk) && (actioner.tapped.is)) {
+      if (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString)
         filter_enabled(gameo, actioner, List(ActionAttack, ActionMonk100DragonsRemove, ActionMonkMonkGod))
-    else if ((action_list_in == null) && (result.isEmpty) &&
-        (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString) &&
-        (gameo.roomphase.actioner_id.is == actioner.id.is))
+      else
+        filter_enabled(gameo, actioner, List(ActionAttack, ActionMonk100DragonsRemove))
+    } 
+    else if ((action_list_in == null) && ((result.isEmpty) || (result == List(ActionRefine))) &&
+             (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString))
       List(ActionCardRenew)
-    else if ((gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString) &&
-             (gameo.roomphase.actioner_id.is == actioner.id.is) &&
-             (actioner.get_role == RoleMagicSword) && (CardPool.in_hand(actioner, gameo.card_list).length > 0))
+    else if ((actioner.get_role == RoleMagicSword) && (CardPool.in_hand(actioner, gameo.card_list).length > 0) &&
+             (gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString))
       result
     else if ((gameo.roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString) &&
-             (gameo.roomphase.actioner_id.is == actioner.id.is) &&
-             (result.filter(x => actioner.get_role.skills(RoomPhaseEnum.MAIN_NO_ACTIVATE).contains(x)).length == 0)) {
+      (result.filter(x => actioner.get_role.skills(RoomPhaseEnum.MAIN_NO_ACTIVATE).contains(x)).length == 0)) {
       val result1 = filter_enabled(gameo, actioner, actioner.get_role.skills(RoomPhaseEnum.MAIN_NO_ACTIVATE) ::: List(ActionPurchase, ActionCombine, ActionRefine))
       if (result1.isEmpty)
         List(ActionCardRenew)
@@ -134,10 +147,12 @@ object ActionHelper extends Logger {
       } else if (action_enum == MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY) {
         var result = cards.take(2)
         val action_flags2 = action.action_flags2.split(",")
-        if (action_flags2(0) != "0")
-          result = result ::: List(cards(2))
-        if (action_flags2(1) != "0")
-          result = result ::: List(cards(3))
+        if (action_flags2.length ==2) {
+          if (action_flags2(0) != "0")
+            result = result ::: List(cards(2))
+          if (action_flags2(1) != "0")
+            result = result ::: List(cards(3))
+        }
         result
       }
       else cards
@@ -161,8 +176,8 @@ object ActionHelper extends Logger {
       
     if (seals_triggered.length != 0) {
       val delay_phase = RoomPhase.createFrom(roomphase)
-                                 .phase_type(RoomPhaseEnum.DELAYED_ACTION.toString).actioner_id(actioner.id.is)
-                                 .phase_flags(action.id.is.toString)
+                                 .phase_type(RoomPhaseEnum.DELAYED_ACTION.toString).actioner_id(actioner_id)
+                                 .actionee_id(roomphase.actionee_id.is).phase_flags(action.id.is.toString)
       gameo.push_phase(delay_phase)
         //gameo.refresh_roomphase
         //gameo.set_no_pop(true)
@@ -200,7 +215,7 @@ object ActionHelper extends Logger {
     } else if (phase_type == RoomPhaseEnum.LACERATE_REACTION.toString) {
       GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))
     } else if (phase_type == RoomPhaseEnum.WATERSHADOW_REACTION.toString) {
-      GameProcessor.process_damage_pre2(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
+      GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
     } else if (phase_type == RoomPhaseEnum.SHOCK_REACTION.toString) {
       val roomround = gameo.roomround
       val actionee = UserEntry.get(roomphase.actionee_id.is, userentrys)
@@ -229,6 +244,8 @@ object ActionHelper extends Logger {
         
       RoomActor.sendRoomMessage(gameo.room.id.is, SessionVarSet(room = gameo.room, userentryteams = gameo.userentryteams))
       gameo.add_update(List(ForceUpdateEnum.TEAM_TABLE))
+    } else if (phase_type == RoomPhaseEnum.REFLECT_REACTION.toString) {
+      GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
     } else if (phase_type == RoomPhaseEnum.SMITE_REACTION.toString) {
       GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))
     } else if (phase_type == RoomPhaseEnum.GHOSTS100_REACTION.toString) {
@@ -254,13 +271,13 @@ object ActionHelper extends Logger {
       actioner.add_role_flag(UserEntryRoleFlagEnum.REDKNIGHT_DISCIPLINE).save
     } else if (phase_type == RoomPhaseEnum.SOULLINK_REACTION.toString) {
       if (roomphase.phase_flags.is == SoulMageEnum.TOMAGE.toString) {
-        GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), UserEntry.get(actioner.target_user.is, userentrys))
+        GameProcessor.process_damage_pre2(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), UserEntry.get(actioner.target_user.is, userentrys))
       } else if (roomphase.phase_flags.is == SoulMageEnum.FROMMAGE.toString) {
-        GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
+        GameProcessor.process_damage_pre2(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
       } else 
         warn("Unknown Phase Flags : " + roomphase.phase_flags.is)
     } else if (phase_type == RoomPhaseEnum.PILGRIMAGE_REACTION.toString) {
-      GameProcessor.process_damage_pre2(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
+      GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
     } else if ((phase_type == RoomPhaseEnum.POISONPOWDER_REACTION.toString) ||
                (phase_type == RoomPhaseEnum.MIRRORFLOWER_REACTION.toString)) {
       GameProcessor.process_damage_pre(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), UserEntry.get(roomphase.actionee2_id.is, userentrys))
@@ -417,7 +434,7 @@ object ActionHelper extends Logger {
       val delay_phase = RoomPhase.createFrom(roomphase)
                                  .phase_type(RoomPhaseEnum.DELAYED_ACTION.toString).actioner_id(actioner.id.is)
                                  //.deadline(PlummUtil.dateAddSecond(new java.util.Date(), gameo.room.reaction_time.is))
-                                 .phase_flags(action.id.is.toString)
+                                 .actionee_id(roomphase.actionee_id.is).phase_flags(action.id.is.toString)
       RoomPhase.push(gameo, delay_phase)
       //gameo.refresh_roomphase
       val penetrate_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is)
@@ -431,7 +448,7 @@ object ActionHelper extends Logger {
       val delay_phase = RoomPhase.createFrom(roomphase)
                                  .phase_type(RoomPhaseEnum.DELAYED_ACTION.toString).actioner_id(actioner.id.is)
                                  //.deadline(PlummUtil.dateAddSecond(new java.util.Date(), gameo.room.reaction_time.is))
-                                 .phase_flags(action.id.is.toString)
+                                 .actionee_id(roomphase.actionee_id.is).phase_flags(action.id.is.toString)
       RoomPhase.push(gameo, delay_phase)
 
         //target_player.remove_role_flag(UserEntryRoleFlagEnum.MONK_POWERUP).save
@@ -445,7 +462,7 @@ object ActionHelper extends Logger {
           (roomphase.phase_flags.is == RoomPhaseEnum.ATTACK.toString)) {
       val delay_phase = RoomPhase.createFrom(roomphase)
                                  .phase_type(RoomPhaseEnum.DELAYED_ACTION.toString).actioner_id(actioner.id.is)
-                                 .phase_flags(action.id.is.toString)
+                                 .actionee_id(roomphase.actionee_id.is).phase_flags(action.id.is.toString)
       RoomPhase.push(gameo, delay_phase)
 
       val forbidden_phase = RoomPhase.createFrom(roomphase)
@@ -1054,7 +1071,7 @@ object ActionHelper extends Logger {
         //RoomActor.sendRoomMessage(gameo.room.id.is, SessionVarSet(room = gameo.room, userentrys = gameo.userentrys))
         //gameo.add_update(List(ForceUpdateEnum.USER_TABLE))
         
-        GameProcessor.process_damage_pre2(gameo, actionee, actioner)
+        GameProcessor.process_damage(gameo, actionee, actioner)
         
       case MTypeEnum.ACTION_ASSASSIN_SNEAK =>
         //val roomphase = gameo.roomphase
@@ -1097,7 +1114,8 @@ object ActionHelper extends Logger {
         cards.foreach { card1 =>
           card1.owner_id(actionee_id).position(CardPositionEnum.HAND.toString).save
         }
-        if ((actioner.get_role == RoleMiko) && (actioner.tapped.is))
+        if ((actioner.get_role == RoleMiko) && (actioner.tapped.is) &&
+            (CardPool.in_hand(actioner, gameo.card_list).length < 3))
           GameProcessor.check_miko_untap(gameo, actioner)
         GameProcessor.check_hand_max(gameo, actionee)
       case MTypeEnum.ACTION_ANGEL_ANGELSONG =>
@@ -1933,20 +1951,20 @@ object ActionHelper extends Logger {
         actioner.target_user(actionee.id.is)
         if (actioner.tapped.is) {
           actionee.hand_max(actionee.hand_max.is + 1).save
-          actioner.hand_max(actioner.hand_max.is + 1).save
           if (old_target_user_id != 0) {
             val old_target_user = UserEntry.get(old_target_user_id, userentrys)
             old_target_user.hand_max(old_target_user.hand_max.is - 1).save
             GameProcessor.check_hand_max(gameo, old_target_user)
-          }
+          } else
+            actioner.hand_max(actioner.hand_max.is + 1).save
         } else {
           actionee.hand_max(actionee.hand_max.is - 2).save
-          actioner.hand_max(actioner.hand_max.is - 2).save
           GameProcessor.check_hand_max(gameo, actionee)
           if (old_target_user_id != 0) {
             val old_target_user = UserEntry.get(old_target_user_id, userentrys)
             old_target_user.hand_max(old_target_user.hand_max.is + 2).save
-          }
+          } else
+            actioner.hand_max(actioner.hand_max.is - 2).save
         }
         GameProcessor.process_drawcard(gameo, actioner, 2)
         
@@ -2030,7 +2048,7 @@ object ActionHelper extends Logger {
           if (enemyteam.hasnt_team_flag(UserEntryTeamFlagEnum.MORALGUARD))
             enemyteam.add_team_flag(UserEntryTeamFlagEnum.MORALGUARD).save
         }
-        GameProcessor.process_damage_pre2(gameo, actionee, actioner)
+        GameProcessor.process_damage(gameo, actionee, actioner)
 
       case MTypeEnum.ACTION_BUTTERFLY_POISONPOWDER   =>  
         val roomphase = gameo.roomphase

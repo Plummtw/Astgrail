@@ -287,7 +287,7 @@ object MessageHelper extends Logger {
       case MTypeEnum.ACTION_LIGHT              =>
         val cssclass = 
           if ((talk.message_flags2.is == RoomPhaseEnum.ATTACK.toString) ||
-              (talk.message_flags2.is == RoomPhaseEnum.ATTACK.toString))
+              (talk.message_flags2.is == RoomPhaseEnum.REATTACK.toString))
             "attack-do"
           else
             "magic-do"
@@ -309,7 +309,7 @@ object MessageHelper extends Logger {
       case MTypeEnum.ACTION_HEAL               =>
         val cssclass = 
           if ((talk.message_flags2.is == RoomPhaseEnum.ATTACK.toString) ||
-              (talk.message_flags2.is == RoomPhaseEnum.ATTACK.toString))
+              (talk.message_flags2.is == RoomPhaseEnum.REATTACK.toString))
             "attack-do"
           else
             "magic-do"
@@ -770,7 +770,7 @@ object MessageHelper extends Logger {
             else
               "1張"
           simple_message_tag(useractioner.handle_name.is + " 使用倒逆之蝶(棄繭移蛹)" + message +
-            "(" + wither_message(message_flags1(2), message_flags2(0)) + "," + wither_message(message_flags1(3), message_flags2(1)), true, "hunter-do")
+            "(" + wither_message(message_flags1(2), message_flags2(0)) + "," + wither_message(message_flags1(3), message_flags2(1)) + ")", true, "hunter-do")
         } else
           simple_message_tag(useractioner.handle_name.is + " 使用倒逆之蝶(自傷移蛹)" + message , true, "hunter-do")
         

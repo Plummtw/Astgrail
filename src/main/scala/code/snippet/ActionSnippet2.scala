@@ -2001,12 +2001,10 @@ class ActionSnippet2 extends Logger {
         action.action_flags(action.action_flags.is + "," + card1.to_card.card_enum.toString + "," + card2.to_card.card_enum.toString)
                .action_cards(action.action_cards.is + "," + card_str1 + "," + card_str2)
                .action_flags2(wither_str1 + "," + wither_str2)
-        
       } else {
         
       }
                                                                                                             
-       
       RoomActor ! SignalAction(gameo.room, action)
       Unblock
     }

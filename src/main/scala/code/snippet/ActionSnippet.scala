@@ -613,18 +613,18 @@ class ActionSnippet extends Logger {
       else true
       
     var refine_list : List[GameEnum.Value] = List()
-    if (role == RoleAdventurer) {
+    //if (role == RoleAdventurer) {
       if ((userentryteam.crystals.is >= 1))
         refine_list ++= List(GameEnum.CRYSTAL1)
       if (userentryteam.gems.is >= 1)
         refine_list ++= List(GameEnum.GEM1)
       if ((userentryteam.crystals.is >= 2))
         refine_list ++= List(GameEnum.CRYSTAL2)
-      if ((userentryteam.crystals.is >= 1))
+      if ((userentryteam.gems.is >= 1) && (userentryteam.crystals.is >= 1))
         refine_list ++= List(GameEnum.GEM1CRYSTAL1)
       if ((userentryteam.gems.is >= 2))
         refine_list ++= List(GameEnum.GEM2)
-    } else {
+    /* }  else {
       if ((userentryteam.crystals.is >= 1) && can_crystal1) //(!role.role_is_gem_only))
         refine_list ++= List(GameEnum.CRYSTAL1)
       if (userentryteam.gems.is >= 1)
@@ -635,7 +635,7 @@ class ActionSnippet extends Logger {
         refine_list ++= List(GameEnum.GEM1CRYSTAL1)
       if ((userentryteam.gems.is >= 2) && (current_energy < 2))
         refine_list ++= List(GameEnum.GEM2)
-    }
+    } */
     
     var refine_map = refine_list.map(x => (x.toString, GameEnum.combine_cname((x))))
       
@@ -652,10 +652,13 @@ class ActionSnippet extends Logger {
         } catch {case e: Exception => 0}
         
         val actionee = UserEntry.get(target_id, gameo.userentrys)
-        if (actionee.gems.is + actionee.crystals.is + refine_str.length > 3)
+        if (actionee.gems.is + actionee.crystals.is + refine_str.length > actionee.energy_max)
           return Unblock & Alert("超過目標能量上限")
         
         action.actionee_id(target_id)
+      } else {
+        if (currentuserentry.gems.is + currentuserentry.crystals.is + refine_str.length > currentuserentry.energy_max)
+          return Unblock & Alert("超過能量上限")
       }
       
       RoomActor ! SignalAction(gameo.room, action)

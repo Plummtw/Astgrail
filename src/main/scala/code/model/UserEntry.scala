@@ -244,7 +244,9 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
       this(ip_address.is)
     }
   }
-  object ip_address     extends MappedString(this, 20)
+  object ip_address     extends MappedString(this, 20) {
+    override val defaultValue = ""
+  }
   object ip_address_md5 extends MappedString(this, 34) with LifecycleCallbacks {
     override def beforeCreate = {
       this(PlummUtil.generateMD5(ip_address.is))

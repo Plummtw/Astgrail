@@ -422,12 +422,13 @@ object ActionRefine extends ActionData(MTypeEnum.ACTION_REFINE, "提煉") {
     //val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
     val role = actioner.get_role
     
-    if (role.role_is_gem_only)
-      (userentryteam.gems.is >= 1) &&
-      (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
-    else  
-      (userentryteam.gems.is + userentryteam.crystals.is >= 1) &&
-      (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
+    (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
+    //if (role.role_is_gem_only)
+    //  (userentryteam.gems.is >= 1) &&
+    //  (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
+    //else  
+    //  (userentryteam.gems.is + userentryteam.crystals.is >= 1) &&
+    //  (actioner.gems.is + actioner.crystals.is < actioner.energy_max)
   }
   
   override def js_command : JsCmd = js_dialog("refine_dialog")

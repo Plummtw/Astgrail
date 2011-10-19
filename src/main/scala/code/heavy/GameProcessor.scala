@@ -20,7 +20,7 @@ import org.plummtw.astgrail.enum._
 import org.plummtw.astgrail.actor._
 import org.plummtw.astgrail.data._
 import org.plummtw.astgrail.card._
-import org.plummtw.astgrail.snippet.UserEntrySnippet
+import org.plummtw.astgrail.snippet.{UserEntrySnippet, GameProcessLock}
 import org.plummtw.astgrail.util.PlummUtil
 import org.plummtw.astgrail.util.CardHelper
 
@@ -248,42 +248,45 @@ object GameProcessor extends Logger{
         actioner.save
 
         // 如果全員都開始遊戲
-        val userentrys_notready = userentrys_rr.filter(x => (x.hasnt_room_flag(UserEntryRoomFlagEnum.VOTED)))
+        GameProcessLock.get_lock(actioner.room_id).synchronized {
+          val userentrys_notready = userentrys_rr.filter(x => (x.hasnt_room_flag(UserEntryRoomFlagEnum.VOTED)))
 
-        if ((userentrys_rr.length >= 4) && (userentrys_rr.length % 2 == 0) &&
-            (userentrys_notready.length == 0)) {
-          
-          room.status(RoomStatusEnum.PLAYING.toString)
-          room.save
-          RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room))
-          
-          RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is,
-                                                                         List(ForceUpdateEnum.GO_OUT_LINK)))
-  
-          GameProcessor.process_start_game(gameo)
-          // New Round
-          //val room_reload       = Room.find(By(Room.id, actioner.room_id.is)).get
-          val roomround_reload  = RoomRound.find(By(RoomRound.room_id, room.id.is),
-                                                 OrderBy(RoomRound.round_no, Descending)).get
-          val roomphases_reload = RoomPhase.findAllByRoomRoundId(roomround_reload.id.is)
-          val roomphase_reload  = RoomPhase.get_phase(room, roomphases_reload)
-          val userentrys_reload = UserEntry.findAllByRoom(room)
-          val userentryteams = UserEntryTeam.findAll(By(UserEntryTeam.room_id, room.id.is))
-          val card_list  = CardPool.findAllByRoomId(room.id.is)
+          if ((userentrys_rr.length >= 4) && (userentrys_rr.length % 2 == 0) &&
+              (userentrys_notready.length == 0)) {
 
-          RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room, roomround = roomround_reload,
-                                                                       roomphases = roomphases_reload,
-                                                                       userentrys = userentrys_reload,
-                                                                       userentryteams = userentryteams,
-                                                                       card_list = card_list))
-          RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is,
-                                                                         List(ForceUpdateEnum.USER_TABLE, ForceUpdateEnum.TIME_TABLE, ForceUpdateEnum.TEAM_TABLE,
-                                                                              ForceUpdateEnum.TALK_TABLE, ForceUpdateEnum.ACTION_BAR, ForceUpdateEnum.CARD_TABLE)))
-        } else {
-          RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room, userentrys = userentrys))
-          RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is ,List(ForceUpdateEnum.USER_TABLE)))
-          RoomActor.sendUserEntryMessage(actioner.id.is, UserEntryForceUpdate(actioner.id.is, List(ForceUpdateEnum.ACTION_BAR)))
-        }
+
+              room.status(RoomStatusEnum.PLAYING.toString)
+              room.save
+            RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room))
+
+            RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is,
+                                                                           List(ForceUpdateEnum.GO_OUT_LINK)))
+
+            GameProcessor.process_start_game(gameo)
+            // New Round
+            //val room_reload       = Room.find(By(Room.id, actioner.room_id.is)).get
+            val roomround_reload  = RoomRound.find(By(RoomRound.room_id, room.id.is),
+                                                   OrderBy(RoomRound.round_no, Descending)).get
+            val roomphases_reload = RoomPhase.findAllByRoomRoundId(roomround_reload.id.is)
+            val roomphase_reload  = RoomPhase.get_phase(room, roomphases_reload)
+            val userentrys_reload = UserEntry.findAllByRoom(room)
+            val userentryteams = UserEntryTeam.findAll(By(UserEntryTeam.room_id, room.id.is))
+            val card_list  = CardPool.findAllByRoomId(room.id.is)
+
+            RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room, roomround = roomround_reload,
+                                                                         roomphases = roomphases_reload,
+                                                                         userentrys = userentrys_reload,
+                                                                         userentryteams = userentryteams,
+                                                                         card_list = card_list))
+            RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is,
+                                                                           List(ForceUpdateEnum.USER_TABLE, ForceUpdateEnum.TIME_TABLE, ForceUpdateEnum.TEAM_TABLE,
+                                                                                ForceUpdateEnum.TALK_TABLE, ForceUpdateEnum.ACTION_BAR, ForceUpdateEnum.CARD_TABLE)))
+          } else {
+            RoomActor.sendRoomMessage(actioner.room_id.is, SessionVarSet(room = room, userentrys = userentrys))
+            RoomActor.sendRoomMessage(actioner.room_id.is, RoomForceUpdate(actioner.room_id.is ,List(ForceUpdateEnum.USER_TABLE)))
+            RoomActor.sendUserEntryMessage(actioner.id.is, UserEntryForceUpdate(actioner.id.is, List(ForceUpdateEnum.ACTION_BAR)))
+          }
+        }  
     }
   }  
   
@@ -309,7 +312,7 @@ object GameProcessor extends Logger{
         poped_phase.deadline(PlummUtil.dateAddSecond(new java.util.Date(), gameo.room.reaction_time.is))
         if (poped_phase.phase_type.is == RoomPhaseEnum.DELAYED_ACTION.toString) {
           poped_phase.save
-          val delayed_action = Action.find(By(Action.id, poped_phase.phase_flags.is.toString.toLong)).get
+          val delayed_action = Action.find(By(Action.id, PlummUtil.parseLong(poped_phase.phase_flags.is.toString))).get
           //info("Delayed Action : "  + gameo.room.toString)
           //info("Delayed Action :  " + gameo.roomphases.toString)
           //gameo.set_is_first(false)
@@ -708,14 +711,6 @@ object GameProcessor extends Logger{
           gameo.push_phase(poison_phase)
       }
       
-    if ((next_player.get_role == RoleAngel) && (next_player.gems.is + next_player.crystals.is > 0)) {
-      val angelsong_phase = 
-        RoomPhase.create.roomround_id(new_roomround.id.is)
-                        .phase_type(RoomPhaseEnum.ANGELSONG_REACTION.toString).actioner_id(next_player.id.is)
-                        .deadline(PlummUtil.dateAddSecond(new java.util.Date(), gameo.room.action_time.is))
-      gameo.push_phase(angelsong_phase)
-    }
-
       //gameo.room.save
       //RoomActor.sendRoomMessage(gameo.room.id.is, SessionVarSet(room = gameo.room, roomround = new_roomround, roomphases = new_phases, userentrys = gameo.userentrys,
       //                                                          userentryteams = gameo.userentryteams, card_list = gameo.card_list))
@@ -747,6 +742,15 @@ object GameProcessor extends Logger{
       */
     }
 
+    if ((next_player.get_role == RoleAngel) && (next_player.gems.is + next_player.crystals.is > 0)) {
+      val angelsong_phase = 
+        RoomPhase.create.roomround_id(new_roomround.id.is)
+                        .phase_type(RoomPhaseEnum.ANGELSONG_REACTION.toString).actioner_id(next_player.id.is)
+                        .deadline(PlummUtil.dateAddSecond(new java.util.Date(), gameo.room.reaction_time.is))
+      gameo.push_phase(angelsong_phase)
+    }
+
+    
     
     //if (!GameProcessor.check_victory(gameo)) {
     
@@ -1093,6 +1097,34 @@ object GameProcessor extends Logger{
   def process_damage_pre (gameo : GameObject, 
                     actioner : UserEntry, actionee : UserEntry) = {
     val roomphase = gameo.roomphase
+    if ((actionee.get_role == RoleSoulMage) && (actionee.target_user.is != 0) &&
+        (actionee.blue_index.is > 0) && (roomphase.power.is > 0)){
+      val new_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is).card_enum(roomphase.card_enum.is)
+                                 //.power(roomphase.power.is).phase_flags(roomphase.phase_flags.is)
+                               .phase_type(RoomPhaseEnum.SOULLINK_REACTION.toString)
+                               .actioner_id(actionee.id.is).actionee_id(actioner.id.is)
+                               .phase_flags(SoulMageEnum.FROMMAGE.toString)
+      RoomPhase.push(gameo, new_phase)
+    } else if (roomphase.power.is > 0) {
+      val soulmages = gameo.userentrys.filter(x =>
+       ((x.get_role == RoleSoulMage) && (x.target_user.is == actionee.id.is) &&
+        (x.blue_index.is > 0)))
+      if (soulmages.length != 0 ) {
+        val new_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is).card_enum(roomphase.card_enum.is)
+                                   //.power(roomphase.power.is).phase_flags(roomphase.phase_flags.is)
+                                 .phase_type(RoomPhaseEnum.SOULLINK_REACTION.toString)
+                                 .actioner_id(soulmages(0).id.is).actionee_id(actioner.id.is)
+                                 .phase_flags(SoulMageEnum.TOMAGE.toString)
+        RoomPhase.push(gameo, new_phase)
+      } else
+        process_damage_pre2(gameo, actioner, actionee)
+    } else
+      process_damage_pre2(gameo, actioner, actionee)
+  }  
+  
+  def process_damage_pre2 (gameo : GameObject, 
+                    actioner : UserEntry, actionee : UserEntry) = {
+    val roomphase = gameo.roomphase
     if ((actionee.get_role == RoleAssassin) && (roomphase.power.is > 0)){
       //val roomphase = gameo.roomphase
       val new_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is).card_enum(roomphase.card_enum.is)
@@ -1120,36 +1152,8 @@ object GameProcessor extends Logger{
                                  .actioner_id(actionee.id.is).actionee_id(actioner.id.is)
         RoomPhase.push(gameo, new_phase)
       } 
-      process_damage_pre2(gameo, actioner, actionee)
-    } 
-  }
-  
-  def process_damage_pre2 (gameo : GameObject, 
-                    actioner : UserEntry, actionee : UserEntry) = {
-    val roomphase = gameo.roomphase
-    if ((actionee.get_role == RoleSoulMage) && (actionee.target_user.is != 0) &&
-        (actionee.blue_index.is > 0) && (roomphase.power.is > 0)){
-      val new_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is).card_enum(roomphase.card_enum.is)
-                                 //.power(roomphase.power.is).phase_flags(roomphase.phase_flags.is)
-                               .phase_type(RoomPhaseEnum.SOULLINK_REACTION.toString)
-                               .actioner_id(actionee.id.is).actionee_id(actioner.id.is)
-                               .phase_flags(SoulMageEnum.FROMMAGE.toString)
-      RoomPhase.push(gameo, new_phase)
-    } else if (roomphase.power.is > 0) {
-      val soulmages = gameo.userentrys.filter(x =>
-       ((x.get_role == RoleSoulMage) && (x.target_user.is == actionee.id.is) &&
-        (x.blue_index.is > 0)))
-      if (soulmages.length != 0 ) {
-        val new_phase = RoomPhase.createFrom(roomphase) //.roomround_id(gameo.roomround.id.is).card_enum(roomphase.card_enum.is)
-                                   //.power(roomphase.power.is).phase_flags(roomphase.phase_flags.is)
-                                 .phase_type(RoomPhaseEnum.SOULLINK_REACTION.toString)
-                                 .actioner_id(soulmages(0).id.is).actionee_id(actioner.id.is)
-                                 .phase_flags(SoulMageEnum.TOMAGE.toString)
-        RoomPhase.push(gameo, new_phase)
-      } else
-        process_damage(gameo, actioner, actionee)
-    } else
       process_damage(gameo, actioner, actionee)
+    } 
   }
   
   def process_damage(gameo : GameObject, 
