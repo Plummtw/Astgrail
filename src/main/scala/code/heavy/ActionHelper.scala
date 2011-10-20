@@ -544,6 +544,7 @@ object ActionHelper extends Logger {
     if ((action_enum != MTypeEnum.ACTION_DISCARD) &&
         (action_enum != MTypeEnum.ACTION_ANGEL_ANGELBLESS_GIVE) &&
         (action_enum != MTypeEnum.ACTION_PRAYER_SHINEBELIEVE) &&
+        (action_enum != MTypeEnum.ACTION_BISHOP_HOLYFIELD) &&
         (action_enum != MTypeEnum.ACTION_MONK_MONKGOD) && 
         (action_enum != MTypeEnum.ACTION_SOULMAGE_SOULMIRROR) && 
         (action_enum != MTypeEnum.ACTION_MIKO_REVERSEBLEED) && 
@@ -2120,6 +2121,7 @@ object ActionHelper extends Logger {
                                    .last_phase_type("")
           RoomPhase.push(gameo, backdiscard_phase)
         }
+        GameProcessor.check_hand_max(gameo, actioner)
       case MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY        =>  
         actioner.lower_crystals(1).save
         val message_flags1 = action.action_flags.is.split(",")

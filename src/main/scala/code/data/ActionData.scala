@@ -1406,9 +1406,9 @@ object ActionSoulMageSoulBurst extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOUL
 
 object ActionSoulMageSoulSummon extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOULSUMMON, "靈魂召還")  {
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
-    //val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
-    //(hand_cards.filter(x => x.to_card.cardtype_enum == CardTypeEnum.MAGIC).length > 0)
-    true
+    val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
+    (hand_cards.filter(x => x.to_card.cardtype_enum == CardTypeEnum.MAGIC).length > 0)
+    //true
   }
   
   override def js_command : JsCmd = js_dialog("soulmage_soulsummon_dialog")

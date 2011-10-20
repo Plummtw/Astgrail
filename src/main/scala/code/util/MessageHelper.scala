@@ -518,13 +518,18 @@ object MessageHelper extends Logger {
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用神聖契約(" + talk.message_flags.is +
                            ")", true, "hunter-do") 
       case MTypeEnum.ACTION_BISHOP_HOLYFIELD      =>
+        val message = 
+          if (reveal_mode || (useractioner.id.is == currentuserentry_id))
+            "(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") + ")"
+          else
+            "(" + talk.message_flags.is.split(",").toList.length + "張)"
         val additional =
           if (talk.message_flags2.is == "1") "(法術傷害)"
           else if (talk.message_flags2.is == "2") "(增加治癒)"
           else "(？？)"
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
-                           " 使用神聖領域(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
-                           ")" + additional , true, "hunter-do") 
+                           " 使用神聖領域" + message +
+                            additional , true, "hunter-do") 
       case MTypeEnum.ACTION_SAGE_REFLECT           =>
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + 
                            " 使用法術反彈(" + talk.message_flags.is.split(",").toList.map(x => CardEnum.get_card(x).card_name).mkString(",") +
