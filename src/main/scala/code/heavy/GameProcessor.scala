@@ -417,8 +417,7 @@ object GameProcessor extends Logger{
           } else if ((round_player.get_role == RoleRedKnight) && (round_player.tapped.is) &&
               (gameo.roomround.additional.is == 0) &&
               (round_player.hasnt_role_flag(UserEntryRoleFlagEnum.REDKNIGHT_DISCIPLINE)) &&
-              ((round_player.has_role_flag(UserEntryRoleFlagEnum.ATTACK)) ||
-               (round_player.has_role_flag(UserEntryRoleFlagEnum.MAGIC))) &&
+              (round_player.hasnt_role_flag(UserEntryRoleFlagEnum.SPECIAL)) &&
               (round_player.gems.is + round_player.crystals.is > 0)) {
             val action_phase = RoomPhase.create.roomround_id(gameo.roomround.id.is)
                                         .phase_type(RoomPhaseEnum.DISCIPLINE_REACTION.toString).actioner_id(round_player.id.is)

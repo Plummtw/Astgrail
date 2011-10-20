@@ -316,8 +316,10 @@ object ActionMagicMBolt extends ActionMagic(MTypeEnum.ACTION_MAGIC_MBOLT, "魔�
   override def js_command : JsCmd = js_dialog("magic_mbolt_dialog")
 
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
+    val roomround = gameo.roomround
     val roomphase = RoomPhase.get_phase(gameo.room, gameo.roomphases)
-    (roomphase.phase_type.is == RoomPhaseEnum.MBOLT_REACTION.toString) ||
+    //(roomphase.phase_type.is == RoomPhaseEnum.MBOLT_REACTION.toString) ||
+    (roomround.actioner_id.is != roomphase.actioner_id.is) ||
     (actioner.get_role != RoleMagicSword)  
   }
   //override def enabled(gameo : GameObject, actioner : UserEntry)  = {
@@ -466,6 +468,13 @@ object ActionCardRenew extends ActionData(MTypeEnum.ACTION_CARD_RENEW, "重洗�
 }
 
 object ActionLight extends ActionData(MTypeEnum.ACTION_LIGHT, "聖光") with CardTargetable {
+  override def enabled(gameo : GameObject, actioner : UserEntry)  = {
+    val roomround = gameo.roomround
+    val roomphase = RoomPhase.get_phase(gameo.room, gameo.roomphases)
+    (roomround.actioner_id.is != roomphase.actioner_id.is) ||
+    (actioner.get_role != RoleMagicSword)  
+  }
+  
   override def targetable_cards(gameo : GameObject, actioner : UserEntry)  : List[CardPool] = {
     val roomphase = RoomPhase.get_phase(gameo.room, gameo.roomphases)
     val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
