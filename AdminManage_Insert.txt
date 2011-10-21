@@ -1,0 +1,4 @@
+insert into astgrail_dev.adminmanage(param_name, param_value) values('room_start', '0');
+insert into astgrail_dev.adminmanage(param_name, param_value) values('room_end', '24');
+insert into astgrail_dev.adminmanage(param_name, param_value) values('room_count', '5');
+insert into astgrail_dev.adminmanage(param_name, param_value) values('admin_ip', '127.0.0.1');
