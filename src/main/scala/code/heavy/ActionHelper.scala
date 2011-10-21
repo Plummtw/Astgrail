@@ -1525,6 +1525,7 @@ object ActionHelper extends Logger {
         actionee.add_heals(heals, 4).save
         gameo.roomround.additional(1).additional_flag(RoomAdditionalFlagEnum.ACTIVATE.toString).save
       case MTypeEnum.ACTION_BISHOP_HOLYFIELD      =>
+        cards.foreach(_.discard(gameo))
         val actionee_id = action.actionee_id.is
         val actionee : UserEntry = UserEntry.get(actionee_id, userentrys)
         actioner.lower_crystals(1)

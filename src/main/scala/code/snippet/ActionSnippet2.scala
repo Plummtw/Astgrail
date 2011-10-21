@@ -499,7 +499,7 @@ class ActionSnippet2 extends Logger {
         card_str2.toInt
       } catch {case e: Exception => 0}
       
-      val card2 = CardPool.getByNo(card_no2, gameo.card_list)
+      //val card2 = CardPool.getByNo(card_no2, gameo.card_list)
       
       if (card_no == card_no2)
         return Unblock & Alert("棄牌與蓋牌須不同")
@@ -577,9 +577,9 @@ class ActionSnippet2 extends Logger {
         return Unblock & Alert("棄牌與蓋牌須不同")                                         
       
       val card_num2  =
-      if (card_no2 != 0)                                              
-         CardPool.getByNo(card_no2, gameo.card_list).card.is
-      else "0"
+        if (card_no2 != 0)                                              
+          CardPool.getByNo(card_no2, gameo.card_list).card.is
+        else "0"
       
       if (target_ids.length != 2)
           return Unblock & Alert("須指定 2 名角色")                                        
