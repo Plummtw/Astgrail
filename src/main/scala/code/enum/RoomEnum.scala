@@ -3,7 +3,12 @@ package org.plummtw.astgrail.enum
 object RoomFlagEnum extends Enumeration {
   val TEST_MODE      = Value("TM_")
   val WISH_ALIGN     = Value("WA_")
+  val ALIGN_ARRANGE1 = Value("A1_")
+  val ALIGN_ARRANGE2 = Value("A2_")
+  
   val WISH_ROLE      = Value("WR_")
+  
+  
   //val DEATH_LOOK     = Value("DL_")
   //val EXPANSION_ROLE = Value("R1_")
   //val CUSTOM_ROLE     = Value("R2_")
@@ -23,6 +28,8 @@ object RoomFlagEnum extends Enumeration {
   val FLAGNAME_MAP   = Map(
     TEST_MODE      -> "(測)",
     WISH_ALIGN     -> "(希)",
+    ALIGN_ARRANGE1  -> "(排列1)",
+    ALIGN_ARRANGE2  -> "(排列2)",
     WISH_ROLE      -> "(希職)",
     //DEATH_LOOK     -> "(靈)",
     //EXPANSION_ROLE -> "(職1)",

@@ -110,48 +110,75 @@ object GameProcessor extends Logger{
       }
     }
     
-    // 亂數隊伍
-    var java_team_list : java.util.LinkedList[UserEntryTeam] = new java.util.LinkedList()
-    for ( i <- 0 until userentrys_rr.length )
-      java_team_list.add(userentryteams(i % userentryteams.length))
-    
-    java.util.Collections.shuffle(java_team_list)
-    
-    userentrys_ordered.foreach { userentry =>
-      val index = java_team_list.indexWhere(_.team_type.is.toString == userentry.room_flags.is)
-      if (index != -1) {
-        val team = java_team_list(index)
-        userentry.team_id(team.id.is)
-        java_team_list.remove(index)
-      } else
-        userentry.team_id(0)
-    }
-    
-    userentrys_ordered.foreach { userentry =>
-      if (userentry.team_id.is == 0) {
-        userentry.team_id(java_team_list.removeFirst())
-      }
-    }
-    
-    
-    //java_user_no_array : java.util.LinkedList[Int] = new java.util.LinkedList()
+    // 玩家隊列
     for (i <- 1 to userentrys_rr.length)
       java_user_no_array.add(i)
     
     if (room.has_flag(RoomFlagEnum.RANDOM_POSITION))
       java.util.Collections.shuffle(java_user_no_array)
     
+    userentrys_rr.foreach(_.user_no(java_user_no_array.removeFirst()))
+    
+    val userentrys_ordered2 = userentrys_rr.sortBy(_.user_no.is)
+    
+    def align_arrange1(i: Int) : Int = (i % 2)
+    def align_arrange2(i: Int) : Int = (i + 1) / 2 % 2
+    
+    // 隊伍
+    var java_team_list : java.util.LinkedList[UserEntryTeam] = new java.util.LinkedList()
+    for ( i <- 0 until userentrys_rr.length ) {
+      val align_index =
+        if (room.has_flag(RoomFlagEnum.ALIGN_ARRANGE1))
+          align_arrange1(i)
+        else if (room.has_flag(RoomFlagEnum.ALIGN_ARRANGE2))
+          align_arrange2(i)
+        else
+          i % userentryteams.length
+      java_team_list.add(userentryteams(align_index))
+    }  
+    
+    if (room.hasnt_flag(RoomFlagEnum.ALIGN_ARRANGE1) &&
+        room.hasnt_flag(RoomFlagEnum.ALIGN_ARRANGE2))
+      java.util.Collections.shuffle(java_team_list)
+    
+
+    if (room.has_flag(RoomFlagEnum.WISH_ALIGN)) {
+      userentrys_ordered2.foreach { userentry =>
+        val index = java_team_list.indexWhere(_.team_type.is.toString == userentry.room_flags.is)
+        if (index != -1) {
+          val team = java_team_list(index)
+          userentry.team_id(team.id.is)
+          java_team_list.remove(index)
+        } else
+          userentry.team_id(0)
+      }
+
+      userentrys_ordered2.foreach { userentry =>
+        if (userentry.team_id.is == 0) {
+          userentry.team_id(java_team_list.removeFirst().id.is)
+        }
+      }
+    } else {
+      userentrys_ordered2.foreach { userentry =>
+        val team_index = userentry.user_no.is - 1
+        userentry.team_id(java_team_list.removeFirst().id.is)
+      }
+    }
+
+    
     userentrys_rr.foreach { userentry =>
-      val team_index = userentry.user_no.is - 1
-      userentry.team_id(userentryteams(team_index % userentryteams.length).id.is)
+      //val team_index = userentry.user_no.is - 1
+      //userentry.team_id(userentryteams(team_index % userentryteams.length).id.is)
       
-      userentry.user_no(java_user_no_array.removeFirst()).room_flags("").role_flags("").user_flags("")
+      userentry.room_flags("").role_flags("").user_flags("")
       
       if ((userentry.get_role == RoleJudicator) || (userentry.get_role == RoleBrave))
         userentry.crystals(2)
       //println(user_entry.user_no.is + " " + user_entry.user_flags.is)
-      userentry.save
+      //userentry.save
     }
+    
+    userentrys_rr.foreach(_.save)
   }
   
   def process_start_game(gameo : GameObject) = {

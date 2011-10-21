@@ -38,7 +38,7 @@ object CardHelper {
       java.util.Collections.shuffle(java_card_list)
       
       val card_list2 = java_card_list.toList
-      var card_no = 0
+      var card_no = 1
       card_list2 foreach { card_data =>
         val card = CardPool.create.room_id(room.id.is).card_no(card_no)
                            .card(card_data.toString).position(CardPositionEnum.DECK.toString)

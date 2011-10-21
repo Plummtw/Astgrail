@@ -154,7 +154,11 @@ class RoomCreateSnippet extends StatefulSnippet with Logger {
     "name=max_stars"      #> SHtml.select(Seq(("6","3"),("7","3.5"),("8","4"),("9","4.5"),("10","5")),
                              Full(max_stars.toString),  x => asInt(x).foreach(y => (max_stars = y))) &
     "name=test_mode"      #> SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.TEST_MODE)) &
-    "name=wish_align"     #> SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.WISH_ALIGN)) &
+    "name=wish_align"     #> //SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.WISH_ALIGN)) &
+                             SHtml.select(Seq(("","亂數"),(RoomFlagEnum.WISH_ALIGN.toString,"希望陣營"),
+                                              (RoomFlagEnum.ALIGN_ARRANGE1.toString,"交錯排列"),
+                                              (RoomFlagEnum.ALIGN_ARRANGE2.toString,"Ｓ型排列")),
+                             Full(""),  x => if (x != "") option_list = option_list ::: List(RoomFlagEnum.withName(x))) &
     "name=wish_role"      #> SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.WISH_ROLE))  &
     //"name=death_look"     #> SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.DEATH_LOOK)) &
     //"name=expansion_role" #> SHtml.checkbox(false, if (_) option_list = option_list ::: List(RoomFlagEnum.EXPANSION_ROLE)) &

@@ -243,7 +243,7 @@ object ActionHelper extends Logger {
       RoomActor.sendRoomMessage(gameo.room.id.is, SessionVarSet(room = gameo.room, userentryteams = gameo.userentryteams))
       gameo.add_update(List(ForceUpdateEnum.TEAM_TABLE))
     } else if (phase_type == RoomPhaseEnum.REFLECT_REACTION.toString) {
-      GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
+      //GameProcessor.process_damage(gameo, UserEntry.get(roomphase.actionee_id.is, userentrys), actioner)
     } else if (phase_type == RoomPhaseEnum.SMITE_REACTION.toString) {
       GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))
     } else if (phase_type == RoomPhaseEnum.GHOSTS100_REACTION.toString) {

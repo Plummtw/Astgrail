@@ -505,9 +505,9 @@ class ActionSnippet2 extends Logger {
         return Unblock & Alert("棄牌與蓋牌須不同")
       
       val card_num2  =
-      if (card_no2 != 0)                                              
-         CardPool.getByNo(card_no2, gameo.card_list).card.is
-      else "0"
+        if (card_no2 != 0)                                              
+          CardPool.getByNo(card_no2, gameo.card_list).card.is
+        else "0"
       
       if (target_ids.length != 2)
           return Unblock & Alert("須指定 2 名角色")                                        
@@ -1319,9 +1319,9 @@ class ActionSnippet2 extends Logger {
     def process : JsCmd = {
       val cards = card_choose_list.map(CardPool.getByNo(_, gameo.card_list))
       
-      //if (card_choose_list.length == 0) {
-      //  return Unblock & Alert("選擇卡片至少須 1 張")
-      //}
+      if (card_choose_list.length == 0) {
+        return Unblock & Alert("選擇卡片至少須 1 張")
+      }
       
       val action = 
         Action.create.roomround_id(roomround.id.is).mtype(MTypeEnum.ACTION_SOULMAGE_SOULSUMMON.toString)

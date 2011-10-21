@@ -186,7 +186,7 @@ object ActionReattack extends ActionData(MTypeEnum.ACTION_REATTACK, "應戰") wi
         } else if (attacker_role == RoleArcher) {
           (attack_card.cardattr_enum == CardAttrEnum.THUNDER)
         } else if (attacker_role == RoleAssassin) {
-          (attacker.tapped.is)
+          (attacker.tapped.is) && (roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString)
         } else if (attacker_role == RoleSaintLance) {
           attacker.has_role_flag(UserEntryRoleFlagEnum.SAINTLANCE_NOSMITE)
         } else if (attacker_role == RoleMagicSword) {
