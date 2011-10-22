@@ -36,6 +36,18 @@ class RoleData(val enum : RoleEnum.Value, val name : String, val level : Int,
     <span class={cssclass}>[{role_name}]</span>
   }
   
+  //2011-10-22 zephyr
+  def rule_link = {
+    val level_match = role_level match{
+      case 6 => "3"
+      case 7 => "35"
+      case 8 => "4"
+      case 9 => "45"
+      case 10 => "5"
+    }
+   "role" + level_match + ".html#role_" + role_enum
+  }
+  
   //def simple_cfield = {
   //  <span class={RoleSideEnum.get_roleside_color(role_side)}>[{role_name.substring(0,1)}]</span>
   //}

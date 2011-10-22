@@ -26,6 +26,10 @@ a.tip:hover span{ /*the span will display just on :hover state*/
   border-style:dotted;
 }
 
+a {
+  text-decoration:none
+}
+
 .shadow {color: #FF0000;}
 .hunter  {color: #0000FF;}
 .neutral {color: #990099;}

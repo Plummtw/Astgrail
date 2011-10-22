@@ -162,7 +162,9 @@ object UserEntryHelper {
             else
               NodeSeq.Empty }
           {id_icon}{ if ((roomphase.phase_type != RoomPhaseEnum.GAMEHALL.toString))
-             <strong>{userentry.get_role_field(UserEntryTeam.get(userentry.team_id.is, userentryteams).team_css)}</strong>
+          //2011-10-22 zephyr:(update)加入角色說明link
+             <strong><a target="_blank" title="點連結查看角色介紹" href={userentry.get_role_rule_link}>
+             {userentry.get_role_field(UserEntryTeam.get(userentry.team_id.is, userentryteams).team_css)}</a></strong>
             else <strong>[？？]</strong>}
           {if (!role.role_use_tap) "" else if (userentry.tapped) "[橫]" else "[正]"}<br/>
           { "能" + userentry.gems.is.toString + "/" + userentry.crystals.toString}{

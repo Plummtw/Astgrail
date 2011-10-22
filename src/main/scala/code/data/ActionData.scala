@@ -188,9 +188,11 @@ object ActionReattack extends ActionData(MTypeEnum.ACTION_REATTACK, "應戰") wi
         } else if (attacker_role == RoleAssassin) {
           (attacker.tapped.is) && (roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString)
         } else if (attacker_role == RoleSaintLance) {
-          attacker.has_role_flag(UserEntryRoleFlagEnum.SAINTLANCE_NOSMITE)
+          attacker.has_role_flag(UserEntryRoleFlagEnum.SAINTLANCE_NOSMITE) &&
+          (roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString)
         } else if (attacker_role == RoleMagicSword) {
-          attacker.has_role_flag(UserEntryRoleFlagEnum.MAGICSWORD_DARKSTUN)
+          attacker.has_role_flag(UserEntryRoleFlagEnum.MAGICSWORD_DARKSTUN) &&
+          (roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString)
         } else if (attacker_role == RoleMonk) {
           (attacker.has_role_flag(UserEntryRoleFlagEnum.MONK_FIRESOUL)) &&
           (roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString)

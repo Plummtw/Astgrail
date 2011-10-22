@@ -104,6 +104,9 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
   def get_role =  RoleEnum.get_role(role.is)
   
   def get_role_field(cssclass : String) = get_role.cfield(cssclass)
+  
+  //2011-10-22 zephyr
+  def get_role_rule_link = get_role.rule_link
 
   
   object tapped        extends MappedBoolean(this) {
