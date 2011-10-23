@@ -143,7 +143,7 @@ object ActionHelper extends Logger {
            (action.action_flags2.is == "0")) {
         List()
       } else if (action_enum == MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY) {
-        var result = cards.take(2)
+        var result : List[CardPool] = List()
         val action_flags2 = action.action_flags2.split(",")
         if (action_flags2.length ==2) {
           if (action_flags2(0) != "0")
