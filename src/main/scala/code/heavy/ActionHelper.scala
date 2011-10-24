@@ -144,12 +144,14 @@ object ActionHelper extends Logger {
         List()
       } else if (action_enum == MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY) {
         var result : List[CardPool] = List()
-        val action_flags2 = action.action_flags2.split(",")
+        val action_flags2 = 
+          if (action.action_flags2.is == "") Array()
+          else action.action_flags2.is.split(",")
         if (action_flags2.length ==2) {
           if (action_flags2(0) != "0")
-            result = result ::: List(cards(2))
+            result = result ::: List(cards(cards.length - 2))
           if (action_flags2(1) != "0")
-            result = result ::: List(cards(3))
+            result = result ::: List(cards(cards.length - 1))
         }
         result
       }
@@ -2126,14 +2128,16 @@ object ActionHelper extends Logger {
       case MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY        =>  
         actioner.lower_crystals(1).save
         val message_flags1 = action.action_flags.is.split(",")
-        val message_flags2 = action.action_flags2.is.split(",")
+        val message_flags2 = 
+          if (action.action_flags2.is == "") Array()
+          else action.action_flags2.is.split(",")
         if (action.actionee_id.is != 0) {
           val actionee    = UserEntry.get(action.actionee_id.is, userentrys)
           roomphase.phase_type(RoomPhaseEnum.MAGIC.toString)
                    .phase_subtype(action.mtype.is.toString).power(1)
                    .save
           GameProcessor.process_post_heal(gameo, actioner, actionee)
-        } else if (message_flags1.length == 4) {
+        } else if (message_flags2.length == 2) {
           actioner.lower_yellow_index(1).save
           message_flags2.foreach { action_flags_1 =>
             if (action_flags_1 != "0") {

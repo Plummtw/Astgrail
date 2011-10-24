@@ -1931,6 +1931,7 @@ class ActionSnippet2 extends Logger {
     val currentuserentry : UserEntry = CurrentUserEntry_R.get
     
     val cards_in_hand = CardPool.in_hand(currentuserentry, gameo.card_list)
+    val discard_number = math.min(cards_in_hand.length, 2)
     
     var card_choose_list : List[Int] = List()
     
@@ -1960,8 +1961,8 @@ class ActionSnippet2 extends Logger {
     
     def process : JsCmd = {
       val cards = card_choose_list.map(CardPool.getByNo(_, gameo.card_list))
-      if (card_choose_list.length != 2) {
-        return Unblock & Alert("選擇卡片須為 2 張")
+      if (card_choose_list.length != discard_number) {
+        return Unblock & Alert("選擇卡片須為 " + discard_number + " 張")
       }
                                                                                                                     
       val action = 

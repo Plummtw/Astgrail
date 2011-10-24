@@ -123,7 +123,7 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
     this
   }
   def lower_yellow_index(in: Int) = {
-    yellow_index(yellow_index.is - in)
+    yellow_index(math.max(0, yellow_index.is - in))
     this
   }
   
@@ -137,7 +137,7 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
     this
   }
   def lower_blue_index(in: Int) = {
-    blue_index(blue_index.is - in)
+    blue_index(math.max(0, blue_index.is - in))
     this
   }
   
@@ -149,7 +149,7 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
     this
   }
   def lower_hand_max(in: Int) = {
-    hand_max(hand_max.is - in)
+    hand_max(math.max(0, hand_max.is - in))
     this
   }
   
@@ -189,7 +189,7 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
     this
   }
   def lower_heals(in: Int) = {
-    heals(heals.is - in)
+    heals(math.max(0, heals.is - in))
     this
   }
   
@@ -207,7 +207,7 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
   }
   
   def lower_gems(in : Int) = {
-    gems(gems.is - in)
+    gems(math.max(0, gems.is - in))
     this
   }
 
@@ -223,9 +223,9 @@ class UserEntry extends LongKeyedMapper[UserEntry] with CreatedUpdated with IdPK
   def lower_crystals(in : Int) = {
     var remains = in
     val lower_num1 = math.min(crystals.is, remains)
-    crystals(crystals.is - lower_num1)
+    crystals(math.max(0, crystals.is - lower_num1))
     remains = remains - lower_num1
-    gems(gems.is - remains)
+    gems(math.max(0, gems.is - remains))
     this
   }
   
