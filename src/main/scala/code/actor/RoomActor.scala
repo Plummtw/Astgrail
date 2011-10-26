@@ -102,8 +102,8 @@ object RoomActor extends LiftActor with Logger {
     //if (enabled_action_list.contains(ActionCardChoose)) {
     //  enabled_action_list = enabled_action_list ::: List(ActionDrawBlackCard, ActionDrawWhiteCard, ActionDrawGreenCard)
     //}
-        
-    // 這裡加入檢核      
+    
+    // 這裡加入檢核
     if (enabled_action_list.map(_.action_enum.toString).contains(action.mtype.toString)) {
       val talk = Talk.create.roomround_id(action.roomround_id.is).mtype(action.mtype.is)
                             .actioner_id(action.actioner_id.is).actionee_id(action.actionee_id.is)

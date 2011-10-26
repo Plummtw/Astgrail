@@ -187,6 +187,9 @@ class ActionSnippet extends Logger {
         target_str.toLong 
       } catch {case e: Exception => 0}
       
+      if (target_id == 0)
+        return Unblock & Alert("無目標，請重試")
+      
       val card_no : Int = try {
         card_str.toInt
       } catch {case e: Exception => 0}
@@ -288,6 +291,9 @@ class ActionSnippet extends Logger {
       val target_id : Long = try {
         target_str.toLong 
       } catch {case e: Exception => 0}
+      
+      if (target_id == 0)
+        return Unblock & Alert("無目標，請重試")
       
       val card_no : Int = try {
         card_str.toInt
@@ -469,12 +475,15 @@ class ActionSnippet extends Logger {
     val attack_targets = ActionMagicMBolt.targetable_users(gameo, currentuserentry)
     var target_str : String = ""
     
-    def process = {
+    def process : JsCmd = {
       //val roomround = RoomRound_R.get
       //val currentuserentry = CurrentUserEntry_R.get
       val target_id : Long = try {
         target_str.toLong 
       } catch {case e: Exception => 0}
+      
+      if (target_id == 0)
+        return Unblock & Alert("無目標，請重試")
       
       val card_no : Int = try {
         card_str.toInt
@@ -491,6 +500,7 @@ class ActionSnippet extends Logger {
         action.action_flags2(RoomRoundFlagEnum.MBOLT_REVERSE.toString)
       
       RoomActor ! SignalAction(gameo.room, action)
+      Unblock
     }
     
     ajaxForm(bind("action", in,
@@ -498,7 +508,7 @@ class ActionSnippet extends Logger {
                                 Full(card_str),  x => card_str = x),
          "user_select_table" -> UserEntryHelper.user_select_table(UserEntry.rr(gameo.userentrys), 
                                 attack_targets, x => (target_str = x)),
-         "mbolt"    -> ajaxSubmit("確定", () => { process; Unblock }),
+         "mbolt"    -> ajaxSubmit("確定", () => { process }),
          "cancel"    -> <button onclick={Unblock.toJsCmd}>取消</button>))
   }
   

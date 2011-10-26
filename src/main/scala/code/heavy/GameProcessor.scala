@@ -445,6 +445,7 @@ object GameProcessor extends Logger{
               (gameo.roomround.additional.is == 0) &&
               (round_player.hasnt_role_flag(UserEntryRoleFlagEnum.REDKNIGHT_DISCIPLINE)) &&
               (round_player.hasnt_role_flag(UserEntryRoleFlagEnum.SPECIAL)) &&
+              (round_player.hasnt_user_flag(UserEntryFlagEnum.ROUND_SKIP)) &&
               (round_player.gems.is + round_player.crystals.is > 0)) {
             val action_phase = RoomPhase.create.roomround_id(gameo.roomround.id.is)
                                         .phase_type(RoomPhaseEnum.DISCIPLINE_REACTION.toString).actioner_id(round_player.id.is)
@@ -455,6 +456,7 @@ object GameProcessor extends Logger{
           } else if ((gameo.roomround.additional.is == 0) &&
                      (round_player.hasnt_role_flag(UserEntryRoleFlagEnum.SPECIAL)) &&
                      (round_player.hasnt_user_flag(UserEntryFlagEnum.FASTBLESSED)) &&
+                     (round_player.hasnt_user_flag(UserEntryFlagEnum.ROUND_SKIP)) &&
                      (CardPool.in_front(round_player, gameo.card_list)
                               .filter(_.to_card.has_action(MTypeEnum.ACTION_PRAYER_FASTBLESS)).length != 0)) {
             val action_phase = RoomPhase.create.roomround_id(gameo.roomround.id.is)
@@ -643,7 +645,8 @@ object GameProcessor extends Logger{
     next_player.remove_user_flag(UserEntryFlagEnum.FASTBLESSED)
                .remove_role_flag(UserEntryRoleFlagEnum.ATTACK)
                .remove_role_flag(UserEntryRoleFlagEnum.MAGIC) 
-               .remove_role_flag(UserEntryRoleFlagEnum.SPECIAL).save 
+               .remove_role_flag(UserEntryRoleFlagEnum.SPECIAL)
+               .remove_user_flag(UserEntryFlagEnum.ROUND_SKIP).save 
     
     if (current_player.get_role == RoleNecromancer) {
       if (current_player.has_role_flag(UserEntryRoleFlagEnum.NECROMANCER_MAGIC))

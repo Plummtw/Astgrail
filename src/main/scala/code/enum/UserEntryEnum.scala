@@ -62,6 +62,7 @@ object UserEntryFlagEnum extends Enumeration {
   
   val    MBOLT   = Value("M")
   val    FASTBLESSED = Value("F")
+  val    ROUND_SKIP  = Value("R")
   //val  SEALED  = Value("S")
   //val  VICTORY = Value("V")
   

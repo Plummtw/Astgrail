@@ -22,6 +22,9 @@ import org.plummtw.astgrail.util.PlummUtil
 import org.plummtw.astgrail.util.CardHelper
 
 object ActionHelper extends Logger {
+  def actionees_sort(actionees : List[UserEntry], currentuserentry : UserEntry, max_user : Int) = 
+    actionees.sortBy(a => -((a.user_no.is + max_user - currentuserentry.user_no.is - 1) % max_user))
+  
   def action_list(gameo : GameObject, actioner : UserEntry) : List[ActionData] = {
     val roomphase  =  RoomPhase.get_phase(gameo.room, gameo.roomphases)
     
@@ -147,7 +150,7 @@ object ActionHelper extends Logger {
         val action_flags2 = 
           if (action.action_flags2.is == "") Array()
           else action.action_flags2.is.split(",")
-        if (action_flags2.length ==2) {
+        if (action_flags2.length == 2) {
           if (action_flags2(0) != "0")
             result = result ::: List(cards(cards.length - 2))
           if (action_flags2(1) != "0")
@@ -980,7 +983,8 @@ object ActionHelper extends Logger {
           sealers.foreach(_.target_user(0).save)
           //val weakens_in_front = cards_in_front.filter(_.to_card.cardmagic_enum == CardMagicEnum.WEAKEN)
           //weakens_in_front.foreach(_.discard(gameo))
-        } else if (roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString) {
+        } else if ((roomphase.phase_type.is == RoomPhaseEnum.MAIN.toString) || 
+                   (roomphase.phase_type.is == RoomPhaseEnum.MAIN_NO_ACTIVATE.toString)) {
           val taunting_users = gameo.userentrys.filter(x => (x.get_role == RoleBrave) && (x.target_user.is == actioner.id.is))
           taunting_users.foreach(_.target_user(0).save)
         }
@@ -990,6 +994,7 @@ object ActionHelper extends Logger {
         
         //val main_phase = RoomPhase.last(gameo.roomphases)
         //main_phase.additional_flag(RoomAdditionalFlagEnum.DONE.toString).save
+        actioner.add_user_flag(UserEntryFlagEnum.ROUND_SKIP).save
         gameo.room.stack_index(-1)
         //GameProcessor.next_player(gameo)
         //return
@@ -1101,7 +1106,7 @@ object ActionHelper extends Logger {
         val actionees = 
           try { action.action_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, gameo.userentrys)) }
           catch {case e: Exception => List() }
-        actionees.foreach { actionee =>
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
           if (CardPool.in_hand(actionee, gameo.card_list).length != 0) {
             val give_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.ANGELBLESS_REACTION.toString)
                                         .actioner_id(actionee.id.is).actionee_id(actioner.id.is)
@@ -1276,7 +1281,7 @@ object ActionHelper extends Logger {
         val actionees = 
           try { action.action_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, gameo.userentrys)) }
           catch {case e: Exception => List() }
-        actionees.foreach { actionee =>
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
           val shock_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.SHOCK_REACTION.toString)
                                       .actioner_id(actionee.id.is).actionee_id(actioner.id.is).power(2)
           gameo.push_phase(shock_phase)
@@ -1294,8 +1299,11 @@ object ActionHelper extends Logger {
         val actionees = 
           try { action.action_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, gameo.userentrys)) }
           catch {case e: Exception => List() }
-        actionees.foreach { actionee =>
-          GameProcessor.process_check_heal(gameo, actioner, actionee)
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
+          //GameProcessor.process_check_heal(gameo, actioner, actionee)
+          val shock_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                     .actioner_id(actioner.id.is).actionee_id(actionee.id.is).power(2).last_phase_type("")
+          gameo.push_phase(shock_phase)
         }
         
       case MTypeEnum.ACTION_SAINTLANCE_SHINE      =>
@@ -1388,8 +1396,11 @@ object ActionHelper extends Logger {
                  .card_enum(card.to_card.card_enum.toString)
                  .save
         val actionees = UserEntry.rrnc(actioner, gameo.userentrys) 
-        actionees.foreach { actionee =>
-          GameProcessor.process_check_heal(gameo, actioner, actionee)
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
+          //GameProcessor.process_check_heal(gameo, actioner, actionee)
+          val shock_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                     .actioner_id(actioner.id.is).actionee_id(actionee.id.is).power(1).last_phase_type("")
+          gameo.push_phase(shock_phase)
         }
         
       case MTypeEnum.ACTION_NECROMANCER_DEATHTOUCH    =>    
@@ -1411,8 +1422,12 @@ object ActionHelper extends Logger {
                  //.card_enum(card.to_card.card_enum.toString)
                  .save
         val actionees = UserEntry.rrnc(actioner, gameo.userentrys) 
-        actionees.foreach { actionee =>
-          GameProcessor.process_check_heal(gameo, actioner, actionee)
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
+          //GameProcessor.process_check_heal(gameo, actioner, actionee)
+          val shock_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                     .actioner_id(actioner.id.is).actionee_id(actionee.id.is).power(2).last_phase_type("")
+          gameo.push_phase(shock_phase)
+
         }
         
       case MTypeEnum.ACTION_MAGICSWORD_GATHER =>
@@ -1616,8 +1631,11 @@ object ActionHelper extends Logger {
         }
         roomphase.save
         
-        actionees.foreach { actionee =>
-          GameProcessor.process_check_heal(gameo, actioner, actionee)
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
+          //GameProcessor.process_check_heal(gameo, actioner, actionee)
+          val shock_phase = RoomPhase.createFrom(roomphase).phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                     .actioner_id(actioner.id.is).actionee_id(actionee.id.is).power(roomphase.power.is).last_phase_type("")
+          gameo.push_phase(shock_phase)
         }
       case MTypeEnum.ACTION_RUNEMAGE_AIRRUNE       =>
         val action_flags = action.action_flags.is.split(",")
@@ -1631,7 +1649,7 @@ object ActionHelper extends Logger {
           (try { action.action_flags2.split(",").toList.map(x => UserEntry.get(x.toLong, userentrys)) }
           catch {case e: Exception => List() }).filter(CardPool.in_hand(_, gameo.card_list).length != 0)
           
-        actionees.foreach { actionee =>
+        actionees_sort(actionees, actioner, UserEntry.rr(userentrys).length).foreach { actionee =>
           val discard_phase1 = RoomPhase.createFrom(roomphase)
                                       .phase_type(RoomPhaseEnum.AIRRUNE_REACTION.toString)
                                       .actioner_id(actionee.id.is).actionee_id(actioner.id.is)
@@ -1646,6 +1664,13 @@ object ActionHelper extends Logger {
         card2.discard(gameo)
         
       case MTypeEnum.ACTION_RUNEMAGE_100GHOSTS     =>
+        val process_damage_phase1 = RoomPhase.createFrom(roomphase)
+                                    .phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                    .actioner_id(actioner.id.is).actionee_id(roomphase.actionee_id.is)
+                                    //.power(swordki) //.card_enum(card.to_card.card_enum.toString)
+                                    //.last_phase_type("")
+        RoomPhase.push(gameo, process_damage_phase1)
+        
         val action_flags = action.action_flags.is.split(",")
         val is_userune  =
            ((action_flags.length > 1) && (action_flags(1) == MTypeEnum.ACTION_RUNEMAGE_USERUNE.toString))
@@ -1664,14 +1689,14 @@ object ActionHelper extends Logger {
           actioner.lower_crystals(1).save
           
         actionees2.foreach { actionee =>
-          val process_damage_phase1 = RoomPhase.createFrom(roomphase)
+          val process_damage_phase2 = RoomPhase.createFrom(roomphase)
                                       .phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
                                       .actioner_id(actioner.id.is).actionee_id(actionee.id.is)
                                       .power(power) //.card_enum(card.to_card.card_enum.toString)
                                     .  last_phase_type("")
-          RoomPhase.push(gameo, process_damage_phase1)
+          RoomPhase.push(gameo, process_damage_phase2)
         }  
-        GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))
+        //GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))
         
       case MTypeEnum.ACTION_PRAYER_POWERBLESS =>
         actioner.add_role_flag(UserEntryRoleFlagEnum.PRAYER_MAGIC).save
@@ -1754,11 +1779,17 @@ object ActionHelper extends Logger {
         
         val process_damage_phase1 = RoomPhase.createFrom(roomphase)
                                     .phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
+                                    .actioner_id(actioner.id.is).actionee_id(roomphase.actionee_id.is)
+                                    //.power(swordki) //.card_enum(card.to_card.card_enum.toString)
+                                    //.last_phase_type("")
+        RoomPhase.push(gameo, process_damage_phase1)
+        val process_damage_phase2 = RoomPhase.createFrom(roomphase)
+                                    .phase_type(RoomPhaseEnum.PROCESS_DAMAGE.toString)
                                     .actioner_id(actioner.id.is).actionee_id(actionee.id.is)
                                     .power(swordki) //.card_enum(card.to_card.card_enum.toString)
                                     .last_phase_type("")
-        RoomPhase.push(gameo, process_damage_phase1)
-        GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))  
+        RoomPhase.push(gameo, process_damage_phase2)
+        //GameProcessor.process_endure2(gameo, actioner, UserEntry.get(roomphase.actionee_id.is, userentrys))  
 
       case MTypeEnum.ACTION_MONK_KISHOT    =>
         actioner.add_yellow_index(1).save

@@ -126,7 +126,18 @@ object RoomPhaseEnum extends Enumeration {
         (phase_type == RoomPhaseEnum.MIRRORFLOWER_REACTION.toString))
       result + "(" + UserEntry.get(roomphase.actionee_id.is, userentrys).handle_name + " 對 " +
                      UserEntry.get(roomphase.actionee2_id.is, userentrys).handle_name + " 的魔法傷害)"
-    else result
+    else if (phase_type == RoomPhaseEnum.SOULLINK_REACTION.toString) {
+      val damage_type = 
+        if ((roomphase.last_phase_type.is == RoomPhaseEnum.ATTACK.toString) ||
+            (roomphase.last_phase_type.is == RoomPhaseEnum.REATTACK.toString))
+          "攻擊"
+        else
+          "魔法"
+    
+      result + "(" + UserEntry.get(roomphase.actionee_id.is, userentrys).handle_name + " 對 " +
+                     UserEntry.get(roomphase.actionee2_id.is, userentrys).handle_name + " 的" + damage_type + "傷害)"
+                     
+    } else result
   }
 
   def get(phase : String) : RoomPhaseEnum.Value =

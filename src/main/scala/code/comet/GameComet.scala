@@ -444,8 +444,12 @@ class GameComet extends CometActor with Logger {
     //println("updates : " + updates.toString)
     if (updates.contains(ForceUpdateEnum.GO_OUT_LINK)) 
       result = result & SetHtml("go_out_link", go_out_link)
-    if (updates.contains(ForceUpdateEnum.ACTION_BAR)) 
+    if (updates.contains(ForceUpdateEnum.ACTION_BAR)) {
       result = result & SetHtml("action-bar", action_buttons)
+      if (roomphase.actioner_id.is == currentuserentry.id.is) {
+        result = result & JsRaw("playSound(0);")
+      }
+    }
     if (updates.contains(ForceUpdateEnum.TIME_TABLE)) 
       result = result & SetHtml("time-table", time_table)
     if (updates.contains(ForceUpdateEnum.USER_TABLE)) {
