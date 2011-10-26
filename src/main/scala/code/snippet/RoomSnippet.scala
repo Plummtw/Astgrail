@@ -46,9 +46,9 @@ class RoomCreateSnippet extends StatefulSnippet with Logger {
   private var room_comment    = ""
   private var max_user        = 6
   //private var move_time       = 120
-  private var action_time       = 120
-  private var reaction_time      = 120
-  private var max_stars        = 8
+  private var action_time       = 90
+  private var reaction_time      = 90
+  private var max_stars        = 10
   
   def dispatch = {
     case _ => render

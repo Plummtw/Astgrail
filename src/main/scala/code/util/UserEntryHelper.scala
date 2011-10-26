@@ -26,9 +26,10 @@ object UserEntryHelper {
       if (userentry1.target_user.is == userentry.id.is)
         result ++= <span title="五系束縛">五</span>
     }
+    //2011-10-25 zephyr : 修正名稱
     userentrys.filter(_.get_role == RoleSoulMage).foreach { userentry1 => 
       if (userentry1.target_user.is == userentry.id.is)
-        result ++= <span title="靈魂鏈結">鏈</span>
+        result ++= <span title="靈魂鏈接">鏈</span>
     }
     userentrys.filter(_.get_role == RoleBrave).foreach { userentry1 => 
       if (userentry1.target_user.is == userentry.id.is)

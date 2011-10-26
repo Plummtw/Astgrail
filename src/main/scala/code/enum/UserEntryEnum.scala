@@ -8,6 +8,7 @@ object UserEntryRoomFlagEnum extends Enumeration {
   val  AUTOVOTED = Value("A")
   val  SKIPPED    = Value("S")
   val  SUDDENDEATH = Value("D")
+  val  MUSIC       = Value("M")
 }
 
 

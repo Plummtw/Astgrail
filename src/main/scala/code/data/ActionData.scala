@@ -1054,7 +1054,7 @@ object ActionBishopHolyContract extends ActionData(MTypeEnum.ACTION_BISHOP_HOLYC
   
   override def js_command : JsCmd = js_dialog("bishop_holycontract_dialog")
 }
-
+	
 object ActionBishopHolyField extends ActionData(MTypeEnum.ACTION_BISHOP_HOLYFIELD, "神聖領域") with UserEntryTargetable {
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
     val hand_cards  = CardPool.in_hand(actioner, gameo.card_list)
@@ -1438,7 +1438,8 @@ object ActionSoulMageSoulMirror extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOU
   override def js_command : JsCmd = js_dialog("soulmage_soulmirror_dialog")
 }
 
-object ActionSoulMageSoulLink extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOULLINK, "靈魂鏈結") with UserEntryTargetable {
+//2011-10-25 zephyr : 修正名稱
+object ActionSoulMageSoulLink extends ActionData(MTypeEnum.ACTION_SOULMAGE_SOULLINK, "靈魂鏈接") with UserEntryTargetable {
   override def enabled(gameo : GameObject, actioner : UserEntry)  = {
     (actioner.yellow_index.is > 0) && (actioner.blue_index.is > 0) && (actioner.target_user.is == 0)
   }

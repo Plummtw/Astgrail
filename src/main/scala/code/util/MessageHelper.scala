@@ -673,8 +673,9 @@ object MessageHelper extends Logger {
             "(" + talk.message_flags.is.split(",").toList.length + "張)"
         simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用靈魂鏡像" + 
           message, true, "hunter-do")
+      //2011-10-25 zephyr : 修正名稱          
       case MTypeEnum.ACTION_SOULMAGE_SOULLINK          =>
-        simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用靈魂鏈結" , true, "hunter-do")
+        simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用靈魂鏈接" , true, "hunter-do")
       case MTypeEnum.ACTION_SOULMAGE_SOULLINK_TRANSFER =>
         if (talk.message_flags2.is == SoulMageEnum.FROMMAGE.toString)
           simple_message_tag(useractioner.handle_name.is + " 將傷害轉移至 " + useractionee.handle_name.is + " (" + talk.message_flags.is + ")" , true, "hunter-do")
@@ -757,17 +758,15 @@ object MessageHelper extends Logger {
         simple_message_tag(useractioner.handle_name.is + " 使用蛹化" , true, "hunter-do")
       case MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY   =>
         val message_flags1 = talk.message_flags.is.split(",")
-        val message_flags2 = 
-          if (talk.message_flags2.is == "") Array()
-          else talk.message_flags2.is.split(",")
+        val message_flags2 = talk.message_flags2.is.split(",")
         val message = 
           if (reveal_mode || (useractioner.id.is == currentuserentry_id))
-            "(" + message_flags1.take(message_flags1.length - message_flags2.length).map(x => CardEnum.get_card(x).card_name).mkString(",") + ")"
+            "(" + message_flags1.take(2).map(x => CardEnum.get_card(x).card_name).mkString(",") + ")"
           else
-            "(" + message_flags1.take(message_flags1.length - message_flags2.length).length + "張)"
+            "(" + message_flags1.take(2).length + "張)"
         if (talk.actionee_id.is != 0) {
           simple_message_tag(useractioner.handle_name.is + " 對 " + useractionee.handle_name.is + " 使用倒逆之蝶(法術傷害)" + message, true, "hunter-do")
-        } else if (message_flags2.length == 2) {
+        } else if (message_flags1.length == 4) {
           def wither_message(flag1 : String, flag2 : String) = 
             if (flag2 != "0")
                CardEnum.get_card(flag1).card_name + "(凋零:" + 
@@ -777,8 +776,7 @@ object MessageHelper extends Logger {
             else
               "1張"
           simple_message_tag(useractioner.handle_name.is + " 使用倒逆之蝶(棄繭移蛹)" + message +
-            "(" + wither_message(message_flags1(message_flags1.length - 2), message_flags2(0)) + "," + 
-                  wither_message(message_flags1(message_flags1.length - 1), message_flags2(1)) + ")", true, "hunter-do")
+            "(" + wither_message(message_flags1(2), message_flags2(0)) + "," + wither_message(message_flags1(3), message_flags2(1)) + ")", true, "hunter-do")
         } else
           simple_message_tag(useractioner.handle_name.is + " 使用倒逆之蝶(自傷移蛹)" + message , true, "hunter-do")
         
