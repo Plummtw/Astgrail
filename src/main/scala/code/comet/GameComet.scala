@@ -299,6 +299,17 @@ class GameComet extends CometActor with Logger {
       SetValById("say","") & SetValById("font_type","normal")
     }
     
+    def set_sound_link = 
+      if (S.getSessionAttribute("sound").getOrElse("") != "on")
+        a(() => set_sound(true), <span>[音效：關]</span>) 
+      else
+        a(() => set_sound(false), <span>[音效：開]</span>) 
+    
+    def set_sound(b : Boolean) : JsCmd = {
+      S.setSessionAttribute("sound", if (b) "on" else "off")
+      SetHtml("set_sound", set_sound_link)
+    }
+    
     def process_logout(is_force : Boolean) = {
       RoomActor ! RoomUnsubscribe(this, saved_room_id, saved_userentry_id)
       saved_room_id = 0
@@ -313,11 +324,13 @@ class GameComet extends CometActor with Logger {
     val talk_table = MessageHelper.messages_normal(room, roomround, userentrys, reveal_mode)
     val card_table = CardHelper.card_table(room, currentuserentry, card_list)
     
+    
     "#room_no"          #> room.id.is &
     "#room_name"        #> room.room_name.is &
     "#room_comment"     #> room.room_comment.is &
     "#logout_link"      #> a(() => process_logout(false), Seq(<span>[登出]</span>)) &
     "#logout_link2"     #> a(() => process_logout(true), Seq(<span>[登出2]</span>)) &
+    "#set_sound *"      #> set_sound_link &
     // <a href={"login.html?command=logout&room_no=" + room.id.is.toString}>[登出]</a>
     "#go_out_link"      #> go_out_link &
     "name=font_type"    #> SHtml.select(Seq(("large","強力發言"),("slightlarge","稍強發言"),("normal","普通發言"),("small","小聲發言")),

@@ -758,7 +758,7 @@ object MessageHelper extends Logger {
         simple_message_tag(useractioner.handle_name.is + " 使用蛹化" , true, "hunter-do")
       case MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY   =>
         val message_flags1 = talk.message_flags.is.split(",")
-        val message_flags2 = 
+        val message_flags2 : Array[String] = 
           if (talk.message_flags2.is == "") Array()
           else talk.message_flags2.is.split(",")
         val message = 

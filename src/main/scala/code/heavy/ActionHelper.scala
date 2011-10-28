@@ -147,7 +147,7 @@ object ActionHelper extends Logger {
         List()
       } else if (action_enum == MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY) {
         var result : List[CardPool] = List()
-        val action_flags2 = 
+        val action_flags2 : Array[String] = 
           if (action.action_flags2.is == "") Array()
           else action.action_flags2.is.split(",")
         if (action_flags2.length == 2) {
@@ -2159,7 +2159,7 @@ object ActionHelper extends Logger {
       case MTypeEnum.ACTION_BUTTERFLY_REVERSEFLY        =>  
         actioner.lower_crystals(1).save
         val message_flags1 = action.action_flags.is.split(",")
-        val message_flags2 = 
+        val message_flags2 : Array[String] = 
           if (action.action_flags2.is == "") Array()
           else action.action_flags2.is.split(",")
         if (action.actionee_id.is != 0) {

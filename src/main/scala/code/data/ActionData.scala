@@ -52,14 +52,20 @@ class ActionData(action: MTypeEnum.Value, str: String) extends Logger  {
   
   def js_command : JsCmd = Noop
   
-  def js_dialog(dialog_name : String) = 
-    S.runTemplate(List("dialog/" + dialog_name)).
-      map(ns => ModalDialog(ns)) openOr
-      Alert("Couldn't find " + dialog_name + " template")
+  def js_dialog(dialog_name : String) =
+    if (CurrentUserEntry_R.get == null)
+      Alert("你不在遊戲中，請重新登入")
+    else
+      S.runTemplate(List("dialog/" + dialog_name)).
+        map(ns => ModalDialog(ns)) openOr
+        Alert("Couldn't find " + dialog_name + " template")
       
   def js_action : JsCmd = {
     val gameo = GameO_R.get
     val currentuserentry = CurrentUserEntry_R.get
+    
+    if (currentuserentry == null)
+      return Alert("你不在遊戲中，請重新登入")
     
     val roomround = gameo.roomround
     val action = Action.create.roomround_id(gameo.roomround.id.is).actioner_id(currentuserentry.id.is)
