@@ -459,7 +459,8 @@ class GameComet extends CometActor with Logger {
       result = result & SetHtml("go_out_link", go_out_link)
     if (updates.contains(ForceUpdateEnum.ACTION_BAR)) {
       result = result & SetHtml("action-bar", action_buttons)
-      if (roomphase.actioner_id.is == currentuserentry.id.is) {
+      if ((roomphase.actioner_id.is == currentuserentry.id.is) &&
+          (S.getSessionAttribute("sound").getOrElse("") == "on")) {
         result = result & JsRaw("playSound(0);")
       }
     }
